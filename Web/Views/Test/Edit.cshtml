@@ -1,0 +1,31 @@
+﻿@model BL.DTO.TestTemplateDTO
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+	<div>
+		@Html.LabelFor(model => model.Name)
+		@Html.EditorFor(model => model.Name)
+		@Html.ValidationMessageFor(model => model.Name)
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.Date)
+		@Html.EditorFor(model => model.Date)
+		@Html.ValidationMessageFor(model => model.Date)
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.CompletionTime)
+		@Html.EditorFor(model => model.CompletionTime)
+		@Html.ValidationMessageFor(model => model.CompletionTime)
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.NumOfQuestions)
+		@Html.EditorFor(model => model.NumOfQuestions)
+		@Html.ValidationMessageFor(model => model.NumOfQuestions)
+	</div>
+
+	<input type="submit" value="Change" />
+}

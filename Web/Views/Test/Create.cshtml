@@ -1,0 +1,23 @@
+﻿@model BL.DTO.TestTemplateDTO
+
+@using (Html.BeginForm())
+{
+	<div>
+		@Html.LabelFor(model => model.Name)
+		@Html.EditorFor(model => model.Name)
+	</div>
+	<div>
+		@Html.LabelFor(model => model.Date)
+		@Html.EditorFor(model => model.Date)
+	</div>
+	<div>
+		@Html.LabelFor(model => model.CompletionTime)
+		@Html.EditorFor(model => model.CompletionTime)
+	</div>
+	<div>
+		@Html.LabelFor(model => model.NumOfQuestions)
+		@Html.EditorFor(model => model.NumOfQuestions)
+	</div>
+	
+	<input type="submit" value="Create" />
+}
