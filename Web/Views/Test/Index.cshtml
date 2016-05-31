@@ -26,6 +26,9 @@
 		<th>
 			@Html.DisplayNameFor(model => model.NumOfQuestions)
 		</th>
+		<th>
+			Thematic Area Count
+		</th>
 		
 	</tr>
 
@@ -43,6 +46,9 @@
 			</td>
 			<td>
 				@Html.DisplayFor(modelItem => item.NumOfQuestions)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.ThematicAreas.Count)
 			</td>
 
 			<td>

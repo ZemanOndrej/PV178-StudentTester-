@@ -20,7 +20,6 @@ namespace BL.Facades
 
 			using (var context = new AppDbContext())
 			{
-				//context.Database.Log = Console.WriteLine;
 				var oldThematicArea = context.ThematicAreas
 					.SingleOrDefault(c => c.Name.Equals(thematicArea));
 				if (oldThematicArea != null)
@@ -39,7 +38,6 @@ namespace BL.Facades
 			newQuestion.ThematicArea = area;
 			using (var context = new AppDbContext())
 			{
-				//context.Database.Log = Console.WriteLine;
 				if (found)
 				{
 					context.Entry(area).State = EntityState.Modified;

@@ -1,0 +1,40 @@
+﻿@*@model Web.Models.ThematicAreaModel*@
+@**@
+@*@{*@
+@*	*@
+@*}*@
+@**@
+@*<h3>Thematic Areas</h3>*@
+@**@
+@*@Html.AntiForgeryToken()*@
+@*<div>*@
+@*	New Thematic Area*@
+@*	@Html.EditorFor(model => model.area.Name)*@
+@*	<input type="submit" value="Add" />*@
+@*</div>*@
+@**@
+@**@
+@*<p>*@
+@*	Add Thematic Area*@
+@*	@Html.TextBox("ThematicArea")*@
+@*</p>*@
+@**@
+@*<table class="table">*@
+@*	<tr>*@
+@*		<th>*@
+@*			Name*@
+@*		</th>*@
+@**@
+@*	</tr>*@
+@**@
+@*	@foreach (var item in Model.thematicAreas)*@
+@*	{*@
+@*		<tr>*@
+@*			<td>*@
+@*				@Html.DisplayFor(modelItem => item.Name)*@
+@*			</td>*@
+@*		</tr>*@
+@*	}*@
+@**@
+@*</table>*@
+@**@

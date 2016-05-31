@@ -17,8 +17,8 @@ namespace Web.Controllers
 		public ActionResult Index()
 		{
 			
-			var model = new TestModel() {Tests = testFacade.GetAllTestTemplates()};
-			return View(model.Tests);
+			
+			return View(testFacade.GetAllTestTemplates());
 		}
 
 		// GET: Test/Details/5
@@ -39,6 +39,7 @@ namespace Web.Controllers
 		{
 			try
 			{
+				
 				testFacade.CreateTestTemplate(test);
 
 				return RedirectToAction("Index");
@@ -53,33 +54,64 @@ namespace Web.Controllers
 		public ActionResult Edit(int id)
 		{
 			var test = testFacade.GetTestTemplateById(id);
-			return View(test);
+			return View(new EditTestModel { test = test });
 		}
 
 		// POST: Test/Edit/5
 		[HttpPost]
-		public ActionResult Edit(int id, TestTemplateDTO test)
+		public ActionResult Edit(int id, EditTestModel testEdit, string add, string save)
 		{
-			try
+			
+			if (!ModelState.IsValid) return View(testEdit);
+
+			
+			if (!string.IsNullOrEmpty(save))
 			{
-				if (ModelState.IsValid)
+				try
 				{
+					
 					var originalTest = testFacade.GetTestTemplateById(id);
-					originalTest.Date = test.Date;
-					originalTest .Name = test.Name;
-					originalTest.CompletionTime = test.CompletionTime;
-					originalTest.NumOfQuestions = test.NumOfQuestions;
+					originalTest.Date = testEdit.test.Date;
+					originalTest.Name = testEdit.test.Name;
+					originalTest.CompletionTime = testEdit.test.CompletionTime;
+					originalTest.NumOfQuestions = testEdit.test.NumOfQuestions;
 
 					testFacade.UpdateTestTemplate(originalTest);
 
 					return RedirectToAction("Index");
 				}
-				return View(test);
+				catch
+				{
+					return View();
+				}
 			}
-			catch
+
+
+			if (string.IsNullOrEmpty(add)) return View();
+
+
 			{
-				return View();
+				try
+				{
+					
+//					var originalTest = testFacade.GetTestTemplateById(id);
+					
+
+					testFacade.UpdateTestTemplateTheme(testEdit.test,testEdit.area.Name);
+
+					return RedirectToAction("Edit",id);
+					
+
+				}
+				catch
+				{
+					return View();
+				}
 			}
+
+
+			
+
 		}
 
 		// GET: Test/Delete/5
@@ -105,6 +137,30 @@ namespace Web.Controllers
 			
 			return View(model);
 		}
-		
+
+
+		[HttpPost]
+		public ActionResult AddThematicArea(int id,  EditTestModel testEdit)
+		{
+			try
+			{
+				if (ModelState.IsValid)
+				{
+					var originalTest = testFacade.GetTestTemplateById(id);
+
+					originalTest.ThematicAreas.Add(testEdit.area);
+
+					testFacade.UpdateTestTemplate(originalTest);
+
+					return RedirectToAction("Edit");
+				}
+
+			}
+			catch
+			{
+				
+			}
+			return Edit(id);
+		}
 	}
 }

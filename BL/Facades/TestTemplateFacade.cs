@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using BL.DTO;
 using DAL;
@@ -17,7 +18,8 @@ namespace BL.Facades
 
 			using (var context = new AppDbContext())
 			{
-				context.Database.Log = Console.WriteLine;
+				if (context.TestTemplates.FirstOrDefault(s => s.Name.Equals(testTemplate.Name)) != null) return;
+
 				context.TestTemplates.Add(newTestTemplate);
 				context.SaveChanges();
 			}
@@ -80,7 +82,7 @@ namespace BL.Facades
 		{
 			using (var context = new AppDbContext())
 			{
-				context.Database.Log = Console.WriteLine;
+				
 				var testTemplate = context.TestTemplates.Find(id);
 				context.Entry(testTemplate).Collection(c => c.ThematicAreas).Load();
 				return Mapping.Mapper.Map<TestTemplateDTO>(testTemplate);
@@ -99,6 +101,18 @@ namespace BL.Facades
 			}
 		}
 
+		public TestTemplateDTO GetTemplateByName(string name)
+		{
+			using (var context = new AppDbContext())
+			{
+				var tt = (context.TestTemplates.FirstOrDefault(s => s.Name.Equals(name)));
+				context.Entry(tt).Collection(c => c.ThematicAreas).Load();
+				
+				return Mapping.Mapper.Map<TestTemplateDTO> (tt);
+			}
+			
+		}
+
 
 		#endregion
 
@@ -107,11 +121,52 @@ namespace BL.Facades
 		{
 			var newTestTemplate = Mapping.Mapper.Map<TestTemplate>(testTemplate);
 
+			
+			
 			using (var context = new AppDbContext())
 			{
+				
 				context.Entry(newTestTemplate).State = EntityState.Modified;
+
 				context.SaveChanges();
 			}
+			
+
+
+
+		}
+
+
+		public void UpdateTestTemplateTheme(TestTemplateDTO testTemplate, string area)
+		{
+			
+
+		
+			using (var context = new AppDbContext())
+			{
+
+				var tt = Mapping.Mapper.Map<TestTemplate>(GetTemplateByName(testTemplate.Name));
+
+
+
+
+				var themFac = new ThematicAreaFacade();
+				themFac.CreateThematicArea(area);
+				themFac.GetThematicAreaByName(area).Tests.Add(testTemplate);
+
+				tt.ThematicAreas.Add(Mapping.Mapper.Map<ThematicArea>(themFac.GetThematicAreaByName(area)));
+				
+
+				context.Entry(tt).State = EntityState.Modified;
+
+
+
+				context.SaveChanges();
+			}
+
+
+
+			
 		}
 		#endregion
 

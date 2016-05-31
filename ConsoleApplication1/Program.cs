@@ -63,23 +63,9 @@ namespace ConsoleApplication1
 			kappa.Students.Add(stud);
 			
 			kappa.Tests.Add(new TestTemplateDTO {Name = "gachiGASM" , Date = DateTime.Now});
-//			var test = new TestTemplateDTO {Name = "dasdaaaaaaaaa",Date = DateTime.Now };
-//
-//
-//			studgrpFac.CreateStudentGroup(kappa);
-//			questionFac.CreateManyQuestions(new List<QuestionDTO> {que1,que2,pogChamp},"Twitch" );
-//
-//
-//			userFac.Register(new UserDTO
-//			{
-//				Email = "aaaaa@aaa.aaa",
-//				Name = "Kapper",
-//				Surname = "PogChamp",
-//				Password = "aaaaaa",
-//				Code = null, 
-//				UserName = "KKona",
-//
-//			});
+			var test = new TestTemplateDTO {Name = "dasdaaaaaaaaa",Date = DateTime.Now };
+
+			
 
 			var roleManager = new AppRoleManager(new AppRoleStore(new AppDbContext()));
 
@@ -94,77 +80,96 @@ namespace ConsoleApplication1
 
 
 
+			
 
 
-			var testTemp = new TestTemplateDTO
-			{
-				Name = "MyFirstRealTest",
-				CompletionTime = new TimeSpan(1,1,1),
-				Date = DateTime.Now,
-				NumOfQuestions = 5,
-				ThematicAreas = new List<ThematicAreaDTO>
-				{
-					new ThematicAreaDTO
-					{
-						Name = "Twitch"
-					}
-				}
-
-			};
-			var quest3 = questionFac.GetQuestionById(3);
-
-			 var ans = new AnswerDTO
-			 {
-				 Correct = true,
-				 Description = " ayyy almao1",
-				 Text = "TriHard",
-				 Question = quest3
-
-			 };
-			ansFac.CreateAnswer(ans);
-
-			ans = new AnswerDTO
-			{
-				Correct = true,
-				Description = "Top KEK",
-				Text = "4Head",
-				Question = quest3
-
-			};
-			ansFac.CreateAnswer(ans);
+			//			studgrpFac.CreateStudentGroup(kappa);
+			//			questionFac.CreateManyQuestions(new List<QuestionDTO> { que1, que2, pogChamp }, "Twitch");
 
 
+			//			userFac.Register(new UserDTO
+			//						{
+			//							Email = "aaaaa@aaa.aaa",
+			//							Name = "Kapper",
+			//							Surname = "PogChamp",
+			//							Password = "aaaaaa",
+			//							Code = "Kappa", 
+			//							UserName = "KKona",
+			//
+			//						});
+			//
+			//
+						var testTemp = new TestTemplateDTO
+						{
+							Name = "MyFirstRealTest",
+							CompletionTime = new TimeSpan(1,1,1),
+							Date = DateTime.Now,
+							NumOfQuestions = 5,
+							ThematicAreas = new List<ThematicAreaDTO>
+							{
+								new ThematicAreaDTO
+								{
+									Name = "Twitch"
+								}
+							}
+			
+						};
+			//			var quest3 = questionFac.GetQuestionById(3);
+			//
+			//			 var ans = new AnswerDTO
+			//			 {
+			//				 Correct = true,
+			//				 Description = " ayyy almao1",
+			//				 Text = "TriHard",
+			//				 Question = quest3
+			//
+			//			 };
+			//			ansFac.CreateAnswer(ans);
+			//
+			//			ans = new AnswerDTO
+			//			{
+			//				Correct = true,
+			//				Description = "Top KEK",
+			//				Text = "4Head",
+			//				Question = quest3
+			//
+			//			};
+			//			ansFac.CreateAnswer(ans);
+			//
+			//
+			//
+			//
+			//
+			//			quest3 = questionFac.GetQuestionById(2);
+			//
+			//			ans = new AnswerDTO
+			//			{
+			//				Correct = true,
+			//				Description = " ayyy almao2",
+			//				Text = "haHAA",
+			//				Question = quest3
+			//
+			//			};
+			//			ansFac.CreateAnswer(ans);
+			//
+			//
+			//
+			//
+			//			quest3 = questionFac.GetQuestionById(1);
+			//
+			//			ans = new AnswerDTO
+			//			{
+			//				Correct = true,
+			//				Description = " ayyy almao3",
+			//				Text = "KevinTurtle",
+			//				Question = quest3
+			//
+			//			};
+			//			ansFac.CreateAnswer(ans);
+			testTempFac.CreateTestTemplate(testTemp);
 
 
-
-			quest3 = questionFac.GetQuestionById(2);
-
-			ans = new AnswerDTO
-			{
-				Correct = true,
-				Description = " ayyy almao2",
-				Text = "haHAA",
-				Question = quest3
-
-			};
-			ansFac.CreateAnswer(ans);
-
-
-
-
-			quest3 = questionFac.GetQuestionById(1);
-
-			ans = new AnswerDTO
-			{
-				Correct = true,
-				Description = " ayyy almao3",
-				Text = "KevinTurtle",
-				Question = quest3
-
-			};
-			ansFac.CreateAnswer(ans);
-			//testTempFac.CreateTestTemplate(testTemp);
-
+			testTempFac.UpdateTestTemplateTheme(testTemp,"forsen");
 
 			//stud.StudentGroups.Add(kappa);
 			//			studFac.CreateStudent(stud);
@@ -172,7 +177,7 @@ namespace ConsoleApplication1
 
 			//			var test = kappa.Tests.First();
 			//			test.Date=new DateTime(0);
-			//			//TODO nejaky problem je s datetimom
+
 			//			
 
 
@@ -186,26 +191,53 @@ namespace ConsoleApplication1
 
 
 
-			//			testTempFac.CreateTestTemplate(test);
-			//			Console.WriteLine(test.Date + "               <----");
-			////
-			//			themAreaFac.CreateThematicArea("forsenW");
-			//
-			//			themAreaFac.CreateThematicArea("forsenK");
-			//			themAreaFac.CreateThematicArea("forsenC");
-			//
-			////
-			//			questionFac.CreateQuestion(que1,"forsenW");
-			//			questionFac.CreateQuestion(que2, "forsenW");
-			//			questionFac.CreateQuestion(pogChamp, "ForsenC");
-
+			//						testTempFac.CreateTestTemplate(test);
+			/*
+						themAreaFac.CreateThematicArea("forsenW");
+			
+						themAreaFac.CreateThematicArea("forsenK");
+						themAreaFac.CreateThematicArea("forsenC");
+			
+			
+						questionFac.CreateQuestion(que1,"forsenW");
+						questionFac.CreateQuestion(que2, "forsenW");
+						questionFac.CreateQuestion(pogChamp, "ForsenC");
+			*/
 			//Console.WriteLine(questionFac.GetQuestionById(1).ThematicArea.Name+" kappa"+questionFac.GetQuestionById(1).Id);
 
 			//studgrpFac.CreateStudentGroup(kappa);
 
-
-
-
+			var tt=new TestTemplateDTO
+			{
+				Name = "asdf",
+				NumOfQuestions = 5,
+				ThematicAreas = new List<ThematicAreaDTO>
+				{
+					new ThematicAreaDTO
+					{
+						Name = "Twitch"
+					},
+					new ThematicAreaDTO
+					{
+						Name = "forsen"
+					},
+					new ThematicAreaDTO
+					{
+						Name="Billy"
+					}
+				}
+			};
+			
+//			var tt2 = testTempFac.GetTemplateByName(tt.Name);
+//
+//			
+//			Console.WriteLine("///////////");
+//			tt2.ThematicAreas.Add(new ThematicAreaDTO
+//			{
+//				Name = "Billy"
+//			});
+//
+//			testTempFac.UpdateTestTemplate(tt2);
 
 
 			var themAreas = themAreaFac.GetAllThematicAreas();
@@ -221,14 +253,22 @@ namespace ConsoleApplication1
 
 
 
-			var qs = questionFac.GetNumOfRandQuestionsFromThematicAreas(5, testTemp.ThematicAreas);
-			foreach (var q in qs)
+			//			var qs = questionFac.GetNumOfRandQuestionsFromThematicAreas(5, testTemp.ThematicAreas);
+			//			foreach (var q in qs)
+			//			{
+			//				Console.WriteLine(q.Text);
+			//				
+			//			}
+
+
+			foreach (var i in testTempFac.GetAllTestTemplates())
 			{
-				Console.WriteLine(q.Text);
-				
+				Console.WriteLine("testTemp name :" + i.Name);
+				foreach (var thematicAreaDto in i.ThematicAreas)
+				{
+					Console.WriteLine(thematicAreaDto.Name);
+				}
 			}
-
-
 
 			Console.WriteLine("////////////////////////////");
 
@@ -294,8 +334,8 @@ namespace ConsoleApplication1
 //			}
 //
 //
-//			Console.WriteLine("all done");
-//			Console.ReadKey();
+			Console.WriteLine("all done");
+			Console.ReadKey();
 		}
 	}
 }

@@ -1,31 +1,66 @@
-﻿@model BL.DTO.TestTemplateDTO
+﻿@model Web.Models.EditTestModel
 
 @using (Html.BeginForm())
 {
 	@Html.AntiForgeryToken()
 	<div>
-		@Html.LabelFor(model => model.Name)
-		@Html.EditorFor(model => model.Name)
-		@Html.ValidationMessageFor(model => model.Name)
+		@Html.LabelFor(model => model.test.Name)
+		@Html.EditorFor(model => model.test.Name)
+		@Html.ValidationMessageFor(model => model.test.Name)
 	</div>
 
 	<div>
-		@Html.LabelFor(model => model.Date)
-		@Html.EditorFor(model => model.Date)
-		@Html.ValidationMessageFor(model => model.Date)
+		@Html.LabelFor(model => model.test.Date)
+		@Html.EditorFor(model => model.test.Date)
+		@Html.ValidationMessageFor(model => model.test.Date)
 	</div>
 
 	<div>
-		@Html.LabelFor(model => model.CompletionTime)
-		@Html.EditorFor(model => model.CompletionTime)
-		@Html.ValidationMessageFor(model => model.CompletionTime)
+		@Html.LabelFor(model => model.test.CompletionTime)
+		@Html.EditorFor(model => model.test.CompletionTime)
+		@Html.ValidationMessageFor(model => model.test.CompletionTime)
 	</div>
 
 	<div>
-		@Html.LabelFor(model => model.NumOfQuestions)
-		@Html.EditorFor(model => model.NumOfQuestions)
-		@Html.ValidationMessageFor(model => model.NumOfQuestions)
+		@Html.LabelFor(model => model.test.NumOfQuestions)
+		@Html.EditorFor(model => model.test.NumOfQuestions)
+		@Html.ValidationMessageFor(model => model.test.NumOfQuestions)
 	</div>
 
-	<input type="submit" value="Change" />
+
+	<h3>Thematic Areas</h3>
+	<p>
+		New Thematic Area Name
+		
+
+	@Html.LabelFor(model => model.area.Name)
+	@Html.EditorFor(model => model.area.Name)
+	@Html.ValidationMessageFor(model => model.area.Name)
+	<input type="submit" name="add" value="Add"/>
+
+	</p>
+	<table class="table">
+		<tr>
+			<th>
+				Name
+			</th>
+
+		</tr>
+
+		@foreach (var item in Model.test.ThematicAreas)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Name)
+				</td>
+			</tr>
+		}
+
+	</table>
+	<p>
+@*				@Html.ActionLink("Edit Thematic Areas", "EditThematicAreas",id)*@
+	</p>
+
+
+	<input type="submit" name="save" value="Save" />
 }

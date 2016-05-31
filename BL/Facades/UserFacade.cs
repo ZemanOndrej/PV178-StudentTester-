@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using BL.DTO;
 using BL.Identity;
 using DAL;
@@ -29,17 +30,25 @@ namespace BL.Facades
 		public ClaimsIdentity Login(string email, string password)
 		{
 			var userManager = new AppUserManager(new AppUserStore(new AppDbContext()));
+			try
+			{
+				var wantedUser = userManager.FindByEmail(email);
 
-			var wantedUser = userManager.FindByEmail(email);
+				if (wantedUser == null)
+				{
+					return null;
+				}
 
-			if (wantedUser == null)
+				var user = userManager.Find(wantedUser.UserName, password);
+
+				return user == null ? null : userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+			}
+			catch 
 			{
 				return null;
+
 			}
-
-			var user = userManager.Find(wantedUser.UserName, password);
-
-			return user == null ? null : userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+			
 		}
 	}
 }

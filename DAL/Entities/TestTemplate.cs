@@ -13,9 +13,11 @@ namespace DAL.Entities
 		public int NumOfQuestions { get; set; }
 		
 		public string Date { get; set; }
+
 		public TimeSpan CompletionTime { get; set; }
 		
 		public List<ThematicArea> ThematicAreas { get; set; }
+
 		public TestTemplate()
 		{
 			

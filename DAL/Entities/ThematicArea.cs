@@ -6,8 +6,12 @@ namespace DAL.Entities
 	public class ThematicArea
 	{
 		public int Id { get; set; }
+
 		public string Name { get; set; } 
+
 		public List<Question> Questions { get; set; }
+
+		public List<TestTemplate> Tests { get; set; } 
 
 		public ThematicArea()
 		{

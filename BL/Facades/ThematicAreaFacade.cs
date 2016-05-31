@@ -13,13 +13,15 @@ namespace BL.Facades
 		#region create
 		public void CreateThematicArea(string thematicArea)
 		{
-			var newThematicArea = new ThematicArea() {Name = thematicArea};
+			var newThematicArea = new ThematicArea {Name = thematicArea};
 
 			using (var context = new AppDbContext())
 			{
-				context.Database.Log = Console.WriteLine;
+				//context.Database.Log = Console.WriteLine;
+				
 				if (context.ThematicAreas.FirstOrDefault(t => t.Name.Equals(thematicArea)) == null)
 				{
+					
 					context.ThematicAreas.Add(newThematicArea);
 				}
 				
@@ -93,6 +95,7 @@ namespace BL.Facades
 				context.Database.Log = Console.WriteLine;
 				var thematicArea = context.ThematicAreas.Find(id);
 				context.Entry(thematicArea).Collection(c => c.Questions).Load();
+				context.Entry(thematicArea).Collection(c => c.Tests).Load();
 
 				return Mapping.Mapper.Map<ThematicAreaDTO>(thematicArea);
 			}
@@ -104,6 +107,7 @@ namespace BL.Facades
 				context.Database.Log = Console.WriteLine;
 				var thematicArea = context.ThematicAreas.SingleOrDefault(t => t.Name.Equals(name));
 				context.Entry(thematicArea).Collection(c => c.Questions).Load();
+				context.Entry(thematicArea).Collection(c => c.Tests).Load();
 				return Mapping.Mapper.Map<ThematicAreaDTO>(thematicArea);
 			}
 		}
@@ -112,7 +116,7 @@ namespace BL.Facades
 		{
 			using (var context = new AppDbContext())
 			{
-				var thematicAreas = context.ThematicAreas.Include(c=>c.Questions).ToList();
+				var thematicAreas = context.ThematicAreas.Include(c=>c.Questions).Include(c=>c.Tests).ToList();
 				
 				
 				return thematicAreas
