@@ -114,6 +114,79 @@ namespace ConsoleApplication1
 							}
 			
 						};
+
+
+
+
+
+
+//			for (int i = 0; i < 5; i++)
+//			{
+//				var quest = new QuestionDTO
+//				{
+//					Answers = new List<AnswerDTO>
+//				{
+//					new AnswerDTO
+//					{
+//
+//						Text = "asddasd "+i,
+//						Correct = true
+//					},
+//					new AnswerDTO
+//					{
+//						Text = "fdaas da"+i,
+//						Correct = false
+//					},
+//					new AnswerDTO
+//					{
+//						Text = "Tdasd "+i,
+//						Correct = false
+//					}
+//					,
+//					new AnswerDTO
+//					{
+//						Text = "Kasda "+i,
+//						Correct = false
+//					}
+//				}
+//				,
+//					Text = "Qnum =>"+i,
+//					OneAnswer = true,
+//					Points = 420
+//				};
+//
+//				questionFac.CreateQuestion(quest, "Muni");
+//			}
+
+			Console.WriteLine(testTempFac.CreateTestTemplate(new TestTemplateDTO
+			{
+				Name = "NewFag",NumOfQuestions = 5
+			}));
+
+			var quest=new QuestionDTO
+			{
+				Text = "AAAAAAAAAAAAAAA",
+				
+				Points = 2,OneAnswer = true
+			};
+			int id =questionFac.CreateQuestion(quest,"Twitch");
+			var nuQ = questionFac.GetQuestionById(id);
+
+			questionFac.AddAnswerToQuestion(nuQ,new AnswerDTO
+			{
+				Text = "aaaaaaaaaaaaaaaaaaaaaaaaa"
+			});
+
+
+			var nuQ2 = questionFac.GetQuestionById(id);
+			Console.WriteLine("/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\");
+			foreach (var answer in nuQ2.Answers)
+			{
+				Console.WriteLine("ans ->"+answer.Text);
+			}
+
+
+
 			//			var quest3 = questionFac.GetQuestionById(3);
 			//
 			//			 var ans = new AnswerDTO
@@ -166,10 +239,10 @@ namespace ConsoleApplication1
 			//
 			//			};
 			//			ansFac.CreateAnswer(ans);
-			testTempFac.CreateTestTemplate(testTemp);
+			//			testTempFac.CreateTestTemplate(testTemp);
 
 
-			testTempFac.UpdateTestTemplateTheme(testTemp,"forsen");
+			//testTempFac.UpdateTestTemplateTheme(testTemp,"LUL");
 
 			//stud.StudentGroups.Add(kappa);
 			//			studFac.CreateStudent(stud);
@@ -261,14 +334,14 @@ namespace ConsoleApplication1
 			//			}
 
 
-			foreach (var i in testTempFac.GetAllTestTemplates())
-			{
-				Console.WriteLine("testTemp name :" + i.Name);
-				foreach (var thematicAreaDto in i.ThematicAreas)
-				{
-					Console.WriteLine(thematicAreaDto.Name);
-				}
-			}
+//			foreach (var i in testTempFac.GetAllTestTemplates())
+//			{
+//				Console.WriteLine("testTemp name :" + i.Name);
+//				foreach (var thematicAreaDto in i.ThematicAreas)
+//				{
+//					Console.WriteLine(thematicAreaDto.Name);
+//				}
+//			}
 
 			Console.WriteLine("////////////////////////////");
 

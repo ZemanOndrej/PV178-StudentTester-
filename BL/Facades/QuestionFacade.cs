@@ -11,41 +11,49 @@ namespace BL.Facades
 	public class QuestionFacade
 	{
 		#region create
-		public void CreateQuestion(QuestionDTO question, string thematicArea)
+		public int CreateQuestion(QuestionDTO question, string thematicArea)
 		{
 			
 			var newQuestion = Mapping.Mapper.Map<Question>(question);
-			var found = false;
-			ThematicArea area;
 
+
+			int id;
 			using (var context = new AppDbContext())
 			{
-				var oldThematicArea = context.ThematicAreas
-					.SingleOrDefault(c => c.Name.Equals(thematicArea));
-				if (oldThematicArea != null)
+				
+				var tA = context.ThematicAreas.SingleOrDefault(c => c.Name.Equals(thematicArea));
+				if (tA != null)
 				{
-					area = oldThematicArea;
-					found = true;
+					tA.Questions.Add(newQuestion);
+					newQuestion.ThematicArea = tA;
+					context.Entry(tA).State = EntityState.Modified;
+					context.SaveChanges();
 				}
 				else
 				{
-					area = new ThematicArea() { Name = thematicArea };
-					area.Questions.Add(newQuestion);
+					var them = new ThematicArea { Name = thematicArea };
+
+					them.Questions.Add(newQuestion);
+					context.ThematicAreas.Add(them);
+
+					newQuestion.ThematicArea = context.ThematicAreas.SingleOrDefault(t => t.Name.Equals(thematicArea));
+
+					context.Questions.Add(newQuestion);
+					
+					context.SaveChanges();
+					
 				}
-				context.SaveChanges();
+
+				id = newQuestion.Id;
 			}
-			area.Questions.Add(newQuestion);
-			newQuestion.ThematicArea = area;
-			using (var context = new AppDbContext())
-			{
-				if (found)
-				{
-					context.Entry(area).State = EntityState.Modified;
-				}
-				context.Questions.Add(newQuestion);
-				context.SaveChanges();
-			}
-		
+
+			
+			
+	
+
+			
+			
+			return id;
 		}
 
 		public void CreateManyQuestions(IEnumerable<QuestionDTO> questions, string thematicArea)
@@ -139,11 +147,11 @@ namespace BL.Facades
 		{
 			using (var context = new AppDbContext())
 			{
-				context.Database.Log = Console.WriteLine;
+				
 				var qs = context.Questions.Include(t=>t.ThematicArea).ToList();
 				var question = qs.Find(q => q.Id == id);
 				if(question == null)
-				return null;
+					return null;
 
 				context.Entry(question).Collection(c => c.Answers).Load();
 
@@ -198,6 +206,41 @@ namespace BL.Facades
 						
 					}
 				}
+				context.SaveChanges();
+			}
+		}
+
+		public void AddAnswerToQuestion(QuestionDTO question, AnswerDTO answer)
+		{
+			
+			var answerFac = new AnswerFacade();
+
+			using (var context = new AppDbContext())
+			{
+
+				var quest = context.Questions
+					.Include(t => t.ThematicArea).Include(t=>t.Answers)
+					.SingleOrDefault(q=>q.Id==question.Id);
+				
+
+				if (quest == null)
+					return ;
+				context.Entry(quest).Collection(c => c.Answers).Load();
+
+
+				
+				int id =answerFac.CreateAnswer(answer);
+				
+
+				
+
+				var option = context.Answers.Find(id);
+
+				quest.Answers.Add(option);
+				context.Entry(quest).State = EntityState.Modified;
+				
+
+
 				context.SaveChanges();
 			}
 		}

@@ -1,0 +1,94 @@
+﻿@model Web.Models.EditQuestionModel
+
+@{
+	ViewBag.Title = "Edit Question";
+
+}
+
+<h2>Edit Question</h2>
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+	<div>
+		@Html.LabelFor(model => model.Question.Text)
+		@Html.EditorFor(model => model.Question.Text)
+		@Html.ValidationMessageFor(model => model.Question.Text)
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.Question.Points)
+		@Html.EditorFor(model => model.Question.Points)
+		@Html.ValidationMessageFor(model => model.Question.Points)
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.Question.OneAnswer)
+		@Html.EditorFor(model => model.Question.OneAnswer)
+		@Html.ValidationMessageFor(model => model.Question.OneAnswer)
+	</div>
+	<div>
+		@Html.LabelFor(model => model.Question.ThematicArea.Name)
+		@Html.EditorFor(model => model.Question.ThematicArea.Name)
+		@Html.ValidationMessageFor(model => model.Question.ThematicArea.Name)
+	</div>
+
+
+
+	<h2>Add Answer</h2>
+	<div>
+		<div>
+			@Html.LabelFor(model => model.Answer.Text)
+			@Html.EditorFor(model => model.Answer.Text)
+			@Html.ValidationMessageFor(model => model.Answer.Text)
+		</div>
+
+		<div>
+			@Html.LabelFor(model => model.Answer.Correct)
+			@Html.EditorFor(model => model.Answer.Correct)
+			@Html.ValidationMessageFor(model => model.Answer.Correct)
+		</div>
+		<div>
+			@Html.LabelFor(model => model.Answer.Description)
+			@Html.EditorFor(model => model.Answer.Description)
+			@Html.ValidationMessageFor(model => model.Answer.Description)
+		</div>
+		<input type="submit" name="add" value="Add" />
+	</div>
+
+	<h3>Answers</h3>
+	<table class="table">
+		<tr>
+			<th>
+				Text
+			</th>
+			<th>
+				Description
+			</th>
+			<th>
+				Correct
+			</th>
+
+		</tr>
+
+		@foreach (var item in Model.Question.Answers)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Text)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Description)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Correct)
+				</td>
+			</tr>
+		}
+
+	</table>
+	<p>
+	</p>
+
+
+	<input type="submit" value="Save" name="save" />
+}

@@ -1,7 +1,7 @@
 ﻿@model List<BL.DTO.QuestionDTO>
 
 @{
-	
+	ViewBag.Title = "All Questions";
 }
 
 <h2>All Questions</h2>
@@ -27,6 +27,9 @@
 		<th>
 			Thematic Area
 		</th>
+		<th>
+			Answer count
+		</th>
 
 	</tr>
 
@@ -45,14 +48,15 @@
 			<td>
 				@Html.DisplayFor(modelItem => item.ThematicArea.Name)
 			</td>
-
 			<td>
-@*				@if (User.IsInRole("admin"))*@
-@*				{*@
-@*					@Html.ActionLink("Edit", "Edit", new { id = item.Id })*@
-@*					@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
-@*				}*@
-@*				@Html.ActionLink("TakeExam", "TakeTest", new { id = item.Id })*@
+				@Html.DisplayFor(modelItem => item.Answers.Count)
+			</td>
+			<td>
+			
+				@Html.ActionLink("Edit", "Edit", new { id = item.Id })
+				@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+			
+
 			</td>
 		</tr>
 	}

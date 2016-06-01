@@ -36,32 +36,7 @@
 
 
 	<h3>Answers</h3>
-	<p>
-		
-		@Html.ActionLink("Add new Answers","AddAnswer")
-		
-	</p>
-	<table class="table">
-		<tr>
-			<th>
-				Text
-			</th>
-
-		</tr>
-
-		@foreach (var item in Model.Question.Answers)
-		{
-			<tr>
-				<td>
-					@Html.DisplayFor(modelItem => item.Text)
-				</td>
-			</tr>
-		}
-
-	</table>
-	<p>
-	</p>
 
 
-	<input type="submit" value="Change" />
+	<input type="submit" value="Add Answers" />
 }

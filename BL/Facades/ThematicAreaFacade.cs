@@ -127,7 +127,7 @@ namespace BL.Facades
 		#endregion
 
 		#region update
-		/*public void UpdateThematicArea(ThematicAreaDTO thematicArea)
+		public void UpdateThematicArea(ThematicAreaDTO thematicArea)
 		{
 			var newThematicArea = Mapping.Mapper.Map<ThematicArea>(thematicArea);
 
@@ -136,7 +136,7 @@ namespace BL.Facades
 				context.Entry(newThematicArea).State = EntityState.Modified;
 				context.SaveChanges();
 			}
-		}*/
+		}
 
 #endregion
 

@@ -11,16 +11,18 @@ namespace BL.Facades
 	public class AnswerFacade
 	{
 		#region create
-		public void CreateAnswer(AnswerDTO answer)
+		public int CreateAnswer(AnswerDTO answer)
 		{
 			var newAnswer = Mapping.Mapper.Map<Answer>(answer);
-
+			int id;
 			using (var context = new AppDbContext())
 			{
-//				context.Database.Log = Console.WriteLine;
 				context.Answers.Add(newAnswer);
+				
 				context.SaveChanges();
+				id = newAnswer.Id;
 			}
+			return id;
 		}
 		public void CreateManyAnswers(IEnumerable<AnswerDTO> answers)
 		{
@@ -62,7 +64,6 @@ namespace BL.Facades
 				{
 					using (var context = new AppDbContext())
 					{
-//						context.Database.Log = Console.WriteLine;
 						var answer = context.Answers.Include(a=>a.Question).ToList().Find(a=>a.Id==id);
 						
 				return Mapping.Mapper.Map<AnswerDTO>(answer);

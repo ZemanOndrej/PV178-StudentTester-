@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<BL.DTO.TestTemplateDTO>
 
 @{
-	
+	ViewBag.Title = "All Available Tests";
 }
-
+<h2>All Available Tests</h2>
 @if (User.IsInRole("admin"))
 {
 	<p>

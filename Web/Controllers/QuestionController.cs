@@ -34,6 +34,7 @@ namespace Web.Controllers
 				new QuestionModel
 				{
 					Question = new QuestionDTO { Answers = new List<AnswerDTO>() }
+					
 				}
 				
 				
@@ -47,8 +48,8 @@ namespace Web.Controllers
 			try
 			{
 				
-				questionFacade.CreateQuestion(model.Question,model.Area);
-				return RedirectToAction("Index");
+				int id2=questionFacade.CreateQuestion(model.Question,model.Area);
+				return RedirectToAction("Edit",new {id=id2});
 			}
 			catch
 			{
@@ -59,32 +60,64 @@ namespace Web.Controllers
 		// GET: Question/Edit/5
 		public ActionResult Edit(int id)
 		{
-			return View();
+			return View(new EditQuestionModel
+			{
+				Question = questionFacade.GetQuestionById(id)
+				
+			});
 		}
 
 		// POST: Question/Edit/5
 		[HttpPost]
-		public ActionResult Edit(int id, FormCollection collection)
+		public ActionResult Edit(int id, EditQuestionModel qEdit, string add, string save)
 		{
-			try
-			{
-				// TODO: Add update logic here
+			if (!ModelState.IsValid) return View(qEdit);
+			qEdit.Question.Id = id;
 
-				return RedirectToAction("Index");
-			}
-			catch
+			if (!string.IsNullOrEmpty(save))
 			{
-				return View();
+				try
+				{
+
+					var originalQ = questionFacade.GetQuestionById(id);
+					originalQ.ThematicArea = qEdit.Question.ThematicArea;
+					originalQ.OneAnswer = qEdit.Question.OneAnswer;
+					originalQ.Text = qEdit.Question.Text;
+					originalQ.Points = qEdit.Question.Points;
+
+					questionFacade.UpdateQuestion(originalQ);
+
+					return RedirectToAction("Index");
+				}
+				catch
+				{
+					return View();
+				}
+			}
+			if (string.IsNullOrEmpty(add)) return View();
+			{
+				try
+				{
+					
+					questionFacade.AddAnswerToQuestion(qEdit.Question,qEdit.Answer);
+
+					return RedirectToAction("Edit", new { id});
+
+				}
+				catch
+				{
+					return RedirectToAction("Edit", new { id });
+
+				}
 			}
 		}
 
-		// GET: Question/Delete/5
+
 		public ActionResult Delete(int id)
 		{
 			return View();
 		}
 
-		// POST: Question/Delete/5
 		[HttpPost]
 		public ActionResult Delete(int id, FormCollection collection)
 		{
@@ -100,9 +133,13 @@ namespace Web.Controllers
 			}
 		}
 
-		public ActionResult AddAnswer()
-		{
-			throw new NotImplementedException();
-		}
+//		public ActionResult AddAnswer()
+//		{
+//			return View(new EditQuestionModel
+//			{
+//				Question = new QuestionDTO {Answers = new List<AnswerDTO>()}
+//			});
+//			
+//		}
 	}
 }

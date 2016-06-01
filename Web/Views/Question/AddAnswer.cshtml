@@ -1,0 +1,59 @@
+﻿@*@model Web.Models.EditQuestionModel*@
+@**@
+@*@{*@
+@*	ViewBag.Title = "Add Answers";*@
+@*	*@
+@*}*@
+@**@
+@*<h2>Add Answers</h2>*@
+@**@
+@*<p>*@
+@*	New Thematic Area Name*@
+@*@using (Html.BeginForm())*@
+@*{*@
+@*	@Html.AntiForgeryToken()*@
+@*	<div>*@
+@*		@Html.LabelFor(model => model.Answer.Text)*@
+@*		@Html.EditorFor(model => model.Answer.Text)*@
+@*		@Html.ValidationMessageFor(model => model.Answer.Text)*@
+@*	</div>*@
+@**@
+@*	<div>*@
+@*		@Html.LabelFor(model => model.Answer.Correct)*@
+@*		@Html.EditorFor(model => model.Answer.Correct)*@
+@*		@Html.ValidationMessageFor(model => model.Answer.Correct)*@
+@*	</div>*@
+@**@
+@*	<div>*@
+@*		@Html.LabelFor(model => model.Answer.Description)*@
+@*		@Html.EditorFor(model => model.Answer.Description)*@
+@*		@Html.ValidationMessageFor(model => model.Answer.Description)*@
+@*	</div>*@
+@**@
+@*	<input type="submit" name="add" value="Add" />*@
+@*}*@
+@*	*@
+@**@
+@*</p>*@
+@*<table class="table">*@
+@*	<tr>*@
+@*		<th>*@
+@*			Text*@
+@*		</th>*@
+@**@
+@*	</tr>*@
+@**@
+@*	@foreach (var item in Model.Question.Answers)*@
+@*	{*@
+@*		<tr>*@
+@*			<td>*@
+@*				@Html.DisplayFor(modelItem => item.Text)*@
+@*			</td>*@
+@*		</tr>*@
+@*	}*@
+@**@
+@*</table>*@
+@**@
+@*<div>*@
+@*	@Html.ActionLink("Back","Create","Question")*@
+@*</div>*@

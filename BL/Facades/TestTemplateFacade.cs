@@ -12,17 +12,19 @@ namespace BL.Facades
 	public class TestTemplateFacade
 	{
 		#region create
-		public void CreateTestTemplate(TestTemplateDTO testTemplate)
+		public int CreateTestTemplate(TestTemplateDTO testTemplate)
 		{
 			var newTestTemplate = Mapping.Mapper.Map<TestTemplate>(testTemplate);
 
 			using (var context = new AppDbContext())
 			{
-				if (context.TestTemplates.FirstOrDefault(s => s.Name.Equals(testTemplate.Name)) != null) return;
-
+				if (context.TestTemplates.SingleOrDefault(s => s.Name.Equals(testTemplate.Name)) != null)
+					return context.TestTemplates.SingleOrDefault(s => s.Name.Equals(testTemplate.Name)).Id;
 				context.TestTemplates.Add(newTestTemplate);
 				context.SaveChanges();
+				return newTestTemplate.Id;
 			}
+			
 		}
 
 		public void CreateManyTestTemplates(IEnumerable<TestTemplateDTO> testTemplates)
@@ -139,34 +141,29 @@ namespace BL.Facades
 
 		public void UpdateTestTemplateTheme(TestTemplateDTO testTemplate, string area)
 		{
-			
 
-		
+			var themFac = new ThematicAreaFacade();
+
 			using (var context = new AppDbContext())
 			{
 
-				var tt = Mapping.Mapper.Map<TestTemplate>(GetTemplateByName(testTemplate.Name));
+				var tt = context.TestTemplates.SingleOrDefault(s => s.Name.Equals(testTemplate.Name));
+				context.Entry(tt).Collection(c => c.ThematicAreas).Load();
 
-
-
-
-				var themFac = new ThematicAreaFacade();
-				themFac.CreateThematicArea(area);
-				themFac.GetThematicAreaByName(area).Tests.Add(testTemplate);
-
-				tt.ThematicAreas.Add(Mapping.Mapper.Map<ThematicArea>(themFac.GetThematicAreaByName(area)));
 				
+				themFac.CreateThematicArea(area);
 
-				context.Entry(tt).State = EntityState.Modified;
-
+				var theme = context.ThematicAreas.FirstOrDefault(s => s.Name.Equals(area));
+				if (tt != null)
+				{
+					tt.ThematicAreas.Add(theme);
+					context.Entry(tt).State = EntityState.Modified;
+				}
 
 
 				context.SaveChanges();
 			}
 
-
-
-			
 		}
 		#endregion
 
