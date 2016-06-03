@@ -120,21 +120,38 @@ namespace BL.Facades
 
 		public List<QuestionDTO> GetNumOfRandQuestionsFromThematicAreas(int num, List<ThematicAreaDTO> areasDto)
 		{
-
-			var areas = areasDto.Select(area => Mapping.Mapper.Map<ThematicArea>(area)).ToList();
 			using (var context = new AppDbContext())
 			{
-				var questtions = new List<Question>();
+				var areas = areasDto.Select(dto => context.ThematicAreas
+						.Include(t => t.Questions)
+						.SingleOrDefault(a => dto.Name.Equals(a.Name)))
+					.ToList();
+
+
+				var questions = new List<Question>();
+
 				foreach (var area in areas)
 				{
-					questtions.AddRange(context.Questions
-						.Where(q=>q.ThematicArea.Name.Equals(area.Name))
-							.Include(q=>q.Answers));
+					questions.AddRange(context.Questions
+						.Where(q => q.ThematicArea.Name.Equals(area.Name))
+							.Include(q => q.Answers));
+				}
+
+				var rng = new Random();
+				int n = questions.Count;
+				while (n > 1)
+				{
+					n--;
+					int k = rng.Next(n + 1);
+					var value = questions[k];
+					questions[k] = questions[n];
+					questions[n] = value;
 				}
 
 
 
-				return questtions.Select(q=> Mapping.Mapper.Map<QuestionDTO>(q)).Take(num).ToList();
+
+				return questions.Select(q=> Mapping.Mapper.Map<QuestionDTO>(q)).Take(num).ToList();
 			}
 		}
 
@@ -156,6 +173,7 @@ namespace BL.Facades
 				return Mapping.Mapper.Map<QuestionDTO>(question);
 			}
 		}
+
 		public List<QuestionDTO> GetAllQuestions()
 		{
 			using (var context = new AppDbContext())
@@ -170,6 +188,7 @@ namespace BL.Facades
 					.ToList();
 			}
 		}
+
 		#endregion
 
 		#region update

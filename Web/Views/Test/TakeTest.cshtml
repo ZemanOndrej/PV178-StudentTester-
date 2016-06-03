@@ -1,19 +1,16 @@
 ﻿@model Web.Models.TestActiveModel
-
-
-
-@if (User.IsInRole("admin"))
-{
-	<p>
-		@*@Html.ActionLink("Create New", "Create")*@
-	</p>
+@{
+	ViewBag.Title = Model.Test.Name;
 }
+
+
+	<h1>
+		@Html.ViewData.Model.Test.Name
+	</h1>
+
 <table class="table table-hover table-striped">
 	<tr>
-		<th>
-			@Html.DisplayNameFor(model => model.Test.Name) =
-			@Html.ViewData.Model.Test.Name
-		</th>
+		
 		<th>
 			@Html.DisplayNameFor(model => model.Test.Date) =
 			@Html.ViewData.Model.Test.Date
@@ -29,44 +26,53 @@
 		</th>
 
 	</tr>
-	@{ var i = 0; }
-	@foreach (var item in Model.Questions)
+</table>
+@using (Html.BeginForm())
+{
+	
+	
+		var i = 0;
+	
+	foreach(var item in Model.Questions)
 	{
 		i++;
 		var k = 0;
-		
-		
-		<tr>
+		<table>
 
-			<td>
-				@i . 
-				@Html.DisplayFor(modelItem => item.Text)
+			<tr>
 
-				<br/>
-				<br/>
-				@foreach (var ans in item.Answers)
-				{
-					@k
-					<br/>
-					<p>
-						@ans.Text
-					</p>
-					<br/>
-					<br/>
-					
-				}
-			</td>
-			
+				<th>
+					@i .
+					@Html.DisplayFor(modelItem => item.Text)
+				</th>
 
-			<td>
-				@*@if (User.IsInRole("admin"))
-				{
-					@Html.ActionLink("Edit", "Edit", new { id = item.Id })
-					@Html.ActionLink("Delete", "Delete", new { id = item.Id })
-				}
-				@Html.ActionLink("TakeExam", "TakeTest", new { id = item.Id })*@
-			</td>
-		</tr>
+			</tr>
+			<tr>
+				<td>
+					@foreach (var ans in item.Answers)
+					{
+						k++;
+						<div class="mydivIn">
+
+							@k .
+
+							@ans.Text
+							<br/>
+							@Html.CheckBoxFor(modelItem => modelItem.Answers[ans.Id])
+
+						</div>
+
+
+					}
+				</td>
+
+			</tr>
+
+
+
+
+
+		</table>
 	}
-
-</table>
+	<input type="submit" class="btn btn-primary" name="submit" value="Submit" />
+}

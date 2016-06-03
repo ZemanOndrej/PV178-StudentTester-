@@ -134,43 +134,43 @@ namespace ConsoleApplication1
 
 
 
-//			for (int i = 0; i < 5; i++)
-//			{
-//				var quest = new QuestionDTO
-//				{
-//					Answers = new List<AnswerDTO>
-//				{
-//					new AnswerDTO
-//					{
-//
-//						Text = "asddasd "+i,
-//						Correct = true
-//					},
-//					new AnswerDTO
-//					{
-//						Text = "fdaas da"+i,
-//						Correct = false
-//					},
-//					new AnswerDTO
-//					{
-//						Text = "Tdasd "+i,
-//						Correct = false
-//					}
-//					,
-//					new AnswerDTO
-//					{
-//						Text = "Kasda "+i,
-//						Correct = false
-//					}
-//				}
-//				,
-//					Text = "Qnum =>"+i,
-//					OneAnswer = true,
-//					Points = 420
-//				};
-//
-//				questionFac.CreateQuestion(quest, "Muni");
-//			}
+			for (int i = 0; i < 10; i++)
+			{
+				var quest = new QuestionDTO
+				{
+					Answers = new List<AnswerDTO>
+				{
+					new AnswerDTO
+					{
+
+						Text = "C2 "+i,
+						Correct = true
+					},
+					new AnswerDTO
+					{
+						Text = "CC2"+i,
+						Correct = false
+					},
+					new AnswerDTO
+					{
+						Text = "CC3"+i,
+						Correct = false
+					}
+					,
+					new AnswerDTO
+					{
+						Text = "CC4 "+i,
+						Correct = false
+					}
+				}
+				,
+					Text = "C#2  Qnum =>"+i,
+					OneAnswer = true,
+					Points = 5
+				};
+
+				questionFac.CreateQuestion(quest, "C#2");
+			}
 
 //			Console.WriteLine(testTempFac.CreateTestTemplate(new TestTemplateDTO
 //			{

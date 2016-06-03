@@ -10,6 +10,8 @@ namespace Web.Models
 	public class TestActiveModel
 	{
 		public TestTemplateDTO Test { get; set; }
-		public List<QuestionDTO> Questions { get; set; } 
+		public List<QuestionDTO> Questions { get; set; }
+		//		public Dictionary<int,Dictionary<int,bool>> Answers { get; set; }  
+		public Dictionary<int, bool> Answers { get; set; }
 	}
 }

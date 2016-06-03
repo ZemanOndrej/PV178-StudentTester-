@@ -16,6 +16,7 @@ namespace Web.Controllers
 		TestTemplateFacade testFacade = new TestTemplateFacade();
 
 		#region TestEdit
+
 		[Authorize(Roles = "admin")]
 		public ActionResult Create()
 		{
@@ -94,12 +95,14 @@ namespace Web.Controllers
 			}
 			return RedirectToAction("Index");
 		}
+
 		[Authorize(Roles = "admin")]
 		public ActionResult Delete(int id)
 		{
 			testFacade.DeleteTestTemplate(id);
 			return RedirectToAction("Index");
 		}
+
 		[Authorize(Roles = "admin")]
 		public ActionResult RemoveTheme(int themeId, int testId)
 		{
@@ -107,6 +110,7 @@ namespace Web.Controllers
 			testFacade.RemoveThemArea(testId, themeId);
 			return RedirectToAction("Edit", new { id = testId });
 		}
+
 		[Authorize(Roles = "admin")]
 		public ActionResult RemoveStudentGroup(int studgrpid, int testid)
 		{
@@ -131,19 +135,31 @@ namespace Web.Controllers
 		}
 
 		
-		[HttpGet]
+		
 		public ActionResult TakeTest(int id)
 		{
 
 			var testTmp = testFacade.GetTestTemplateById(id);
-			var qfac = new QuestionFacade();
+			var que = new QuestionFacade().GetNumOfRandQuestionsFromThematicAreas(testTmp.NumOfQuestions, testTmp.ThematicAreas);
+
+			var answs= que.SelectMany(s => s.Answers)
+				.ToDictionary(ans => ans.Id, ans => false);
+
 			var model = new TestActiveModel
 			{
-				Questions = qfac.GetNumOfRandQuestionsFromThematicAreas(5, testTmp.ThematicAreas)
-				,Test = testTmp
+				Questions = que
+				,Test = testTmp,
+				Answers = answs
 			};
-			
-			return View(model);
+
+				return View(model);
+		}
+
+		[HttpPost]
+		public ActionResult TakeTest(int id ,TestActiveModel testActive)
+		{
+			Console.WriteLine(testActive.Test.Name);
+			return RedirectToAction("Index");
 		}
 
 		
