@@ -18,8 +18,7 @@ namespace BL.Facades
 
 			using (var context = new AppDbContext())
 			{
-				if (context.TestTemplates.SingleOrDefault(s => s.Name.Equals(testTemplate.Name)) != null)
-					return context.TestTemplates.SingleOrDefault(s => s.Name.Equals(testTemplate.Name)).Id;
+				
 				context.TestTemplates.Add(newTestTemplate);
 				context.SaveChanges();
 				return newTestTemplate.Id;
@@ -55,12 +54,12 @@ namespace BL.Facades
 		{
 			using (var context = new AppDbContext())
 			{
-				context.Database.Log = Console.WriteLine;
 				var testTemplate = context.TestTemplates.Find(id);
 				context.TestTemplates.Remove(testTemplate);
 				context.SaveChanges();
 			};
 		}
+
 
 
 		public void RemoveAllTestTemplates()
@@ -87,6 +86,7 @@ namespace BL.Facades
 				
 				var testTemplate = context.TestTemplates.Find(id);
 				context.Entry(testTemplate).Collection(c => c.ThematicAreas).Load();
+				context.Entry(testTemplate).Collection(c => c.StudentGroups).Load();
 				return Mapping.Mapper.Map<TestTemplateDTO>(testTemplate);
 			}
 		}
@@ -95,7 +95,7 @@ namespace BL.Facades
 		{
 			using (var context = new AppDbContext())
 			{
-				var testTemplates = context.TestTemplates.Include(c=>c.ThematicAreas).ToList();
+				var testTemplates = context.TestTemplates.Include(c=>c.ThematicAreas).Include(x=>x.StudentGroups).ToList();
 				
 				return testTemplates
 					.Select(element => Mapping.Mapper.Map<TestTemplateDTO>(element))
@@ -109,22 +109,82 @@ namespace BL.Facades
 			{
 				var tt = (context.TestTemplates.FirstOrDefault(s => s.Name.Equals(name)));
 				context.Entry(tt).Collection(c => c.ThematicAreas).Load();
-				
+				context.Entry(tt).Collection(c => c.StudentGroups).Load();
+
 				return Mapping.Mapper.Map<TestTemplateDTO> (tt);
 			}
 			
 		}
 
+		public List<TestTemplateDTO> GetTestsForUser(int id)
+		{
+			var list = new List<TestTemplateDTO>();
+			using (var context = new AppDbContext())
+			{
+				var user = context.Users.Include(s => s.StudentGroups).SingleOrDefault(s => s.Id == id);
 
+
+				var groups = context.StudentGroups.Include(s => s.Tests);
+				foreach (var group in user.StudentGroups)
+				{
+					var grp = groups.SingleOrDefault(g => g.Name.Equals(group.Name));
+
+
+					list.AddRange(grp.Tests.Select(test => Mapping.Mapper.Map<TestTemplateDTO>(test)));
+
+				}
+				return list;
+			}
+		} 
 		#endregion
 
 		#region update
+
+		public void RemoveThemArea(int testId, int themeId)
+		{
+			using (var context = new AppDbContext())
+			{
+
+				var tt = context.TestTemplates.Find(testId);
+				context.Entry(tt).Collection(c => c.ThematicAreas).Load();
+				context.Entry(tt).Collection(c=>c.StudentGroups).Load();
+				
+
+
+				tt.ThematicAreas.Remove(tt.ThematicAreas.FirstOrDefault(t => t.Id == themeId));
+
+				
+				context.Entry(tt).State = EntityState.Modified;
+				
+
+
+				context.SaveChanges();
+			}
+		}
+
+		public void RemoveStudentGroup( int stdgrpId , int testId)
+		{
+			using (var context = new AppDbContext())
+			{
+				var tt = context.TestTemplates.Find(testId);
+				context.Entry(tt).Collection(c => c.ThematicAreas).Load();
+				context.Entry(tt).Collection(c => c.StudentGroups).Load();
+
+
+				tt.StudentGroups.Remove(tt.StudentGroups.FirstOrDefault(t => t.Id == stdgrpId));
+
+
+				context.Entry(tt).State = EntityState.Modified;
+
+
+
+				context.SaveChanges();
+			}
+		}
+
 		public void UpdateTestTemplate(TestTemplateDTO testTemplate)
 		{
 			var newTestTemplate = Mapping.Mapper.Map<TestTemplate>(testTemplate);
-
-			
-			
 			using (var context = new AppDbContext())
 			{
 				
@@ -139,7 +199,7 @@ namespace BL.Facades
 		}
 
 
-		public void UpdateTestTemplateTheme(TestTemplateDTO testTemplate, string area)
+		public void AddTheme(int testId, string area)
 		{
 
 			var themFac = new ThematicAreaFacade();
@@ -147,13 +207,15 @@ namespace BL.Facades
 			using (var context = new AppDbContext())
 			{
 
-				var tt = context.TestTemplates.SingleOrDefault(s => s.Name.Equals(testTemplate.Name));
-				context.Entry(tt).Collection(c => c.ThematicAreas).Load();
+				var tt = context.TestTemplates
+					.Include(s => s.StudentGroups)
+					.Include(s => s.ThematicAreas)
+					.SingleOrDefault(s => s.Id==testId);
 
-				
+
 				themFac.CreateThematicArea(area);
 
-				var theme = context.ThematicAreas.FirstOrDefault(s => s.Name.Equals(area));
+				var theme = context.ThematicAreas.SingleOrDefault(s => s.Name.Equals(area));
 				if (tt != null)
 				{
 					tt.ThematicAreas.Add(theme);
@@ -164,6 +226,35 @@ namespace BL.Facades
 				context.SaveChanges();
 			}
 
+		}
+
+
+		public void AddStudentGroup(int testId, StudentGroupDTO group)
+		{
+			var groupFac = new StudentGroupFacade();
+			using (var context = new AppDbContext())
+			{
+				var tt = context.TestTemplates
+					.Include(s => s.StudentGroups).Include(s => s.ThematicAreas)
+					.SingleOrDefault(s => s.Id == testId);
+
+
+				groupFac.CreateStudentGroup(group);
+
+				var grp = context.StudentGroups.SingleOrDefault(s => s.Name.Equals(group.Name));
+				if (tt != null)
+				{
+					tt.StudentGroups.Add(grp);
+					grp.Tests.Add(tt);
+					context.Entry(grp).State = EntityState.Modified;
+					context.Entry(tt).State = EntityState.Modified;
+				}
+
+
+				context.SaveChanges();
+			}
+			
+			
 		}
 		#endregion
 

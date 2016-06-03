@@ -14,17 +14,25 @@ namespace BL.Facades
 		public void CreateThematicArea(string thematicArea)
 		{
 			var newThematicArea = new ThematicArea {Name = thematicArea};
-
+			if(string.IsNullOrEmpty(thematicArea))return;
+			
 			using (var context = new AppDbContext())
 			{
 				//context.Database.Log = Console.WriteLine;
-				
-				if (context.ThematicAreas.FirstOrDefault(t => t.Name.Equals(thematicArea)) == null)
+				try
 				{
+					if (context.ThematicAreas.SingleOrDefault(t => t.Name.Equals(thematicArea)) == null)
+					{
 					
-					context.ThematicAreas.Add(newThematicArea);
+						context.ThematicAreas.Add(newThematicArea);
+					}
 				}
-				
+				catch (Exception)
+				{
+					// ignored
+				}
+
+
 				context.SaveChanges();
 			}
 		}
@@ -93,9 +101,9 @@ namespace BL.Facades
 			using (var context = new AppDbContext())
 			{
 				context.Database.Log = Console.WriteLine;
-				var thematicArea = context.ThematicAreas.Find(id);
-				context.Entry(thematicArea).Collection(c => c.Questions).Load();
-				context.Entry(thematicArea).Collection(c => c.Tests).Load();
+				var thematicArea = context.ThematicAreas.Include(s => s.Questions).Include(s => s.Tests).SingleOrDefault(s => s.Id.Equals(id));
+//				context.Entry(thematicArea).Collection(c => c.Questions).Load();
+//				context.Entry(thematicArea).Collection(c => c.Tests).Load();
 
 				return Mapping.Mapper.Map<ThematicAreaDTO>(thematicArea);
 			}

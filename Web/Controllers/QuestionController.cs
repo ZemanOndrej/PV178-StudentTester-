@@ -10,24 +10,20 @@ using Web.Models;
 
 namespace Web.Controllers
 {
+	[Authorize]
 	public class QuestionController : Controller
 	{
 
 		private QuestionFacade questionFacade = new QuestionFacade();
-		// GET: Question
+		
 		public ActionResult Index()
 		{
 			 
 			return View(questionFacade.GetAllQuestions());
 		}
 
-		// GET: Question/Details/5
-		public ActionResult Details(int id)
-		{
-			return View();
-		}
 
-		// GET: Question/Create
+		
 		public ActionResult Create()
 		{
 			return View(
@@ -41,7 +37,7 @@ namespace Web.Controllers
 				);
 		}
 
-		// POST: Question/Create
+		
 		[HttpPost]
 		public ActionResult Create(QuestionModel model)
 		{
@@ -57,7 +53,7 @@ namespace Web.Controllers
 			}
 		}
 
-		// GET: Question/Edit/5
+		
 		public ActionResult Edit(int id)
 		{
 			return View(new EditQuestionModel
@@ -67,7 +63,7 @@ namespace Web.Controllers
 			});
 		}
 
-		// POST: Question/Edit/5
+		
 		[HttpPost]
 		public ActionResult Edit(int id, EditQuestionModel qEdit, string add, string save)
 		{
@@ -115,31 +111,17 @@ namespace Web.Controllers
 
 		public ActionResult Delete(int id)
 		{
-			return View();
+			questionFacade.DeleteQuestion(id);
+			return RedirectToAction("Index");
 		}
 
-		[HttpPost]
-		public ActionResult Delete(int id, FormCollection collection)
+		
+		public ActionResult DeleteAnswer(int ansId,int questId)
 		{
-			try
-			{
-				// TODO: Add delete logic here
-
-				return RedirectToAction("Index");
-			}
-			catch
-			{
-				return View();
-			}
+			questionFacade.RemoveAnswer(ansId,questId);
+			return RedirectToAction("Edit", new { id = questId });
 		}
 
-//		public ActionResult AddAnswer()
-//		{
-//			return View(new EditQuestionModel
-//			{
-//				Question = new QuestionDTO {Answers = new List<AnswerDTO>()}
-//			});
-//			
-//		}
+
 	}
 }

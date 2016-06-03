@@ -1,0 +1,29 @@
+﻿@model BL.DTO.StudentGroupDTO
+
+@{
+	ViewBag.Title = "Create New Student Group";
+	
+}
+
+<h2>Create New Student Group</h2>
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+	<div>
+		@Html.LabelFor(model => model.Name)
+		@Html.EditorFor(model => model.Name)
+		@Html.ValidationMessageFor(model => model.Name)
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.RegId)
+		@Html.EditorFor(model => model.RegId)
+		@Html.ValidationMessageFor(model => model.RegId)
+	</div>
+
+	<input type="submit" value="Save" />
+	<button type="button" class="btn btn-default">
+		@Html.ActionLink("Back", "Index", "Test")
+	</button>
+}

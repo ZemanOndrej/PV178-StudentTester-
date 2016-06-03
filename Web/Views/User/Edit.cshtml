@@ -1,0 +1,81 @@
+﻿@model Web.Models.EdirUserModel
+
+@{
+	ViewBag.Title = "Edit User";
+}
+
+<h2>Edit User</h2>
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+	<div>
+		@Html.LabelFor(model => model.User.UserName)
+		@Html.EditorFor(model => model.User.UserName)
+		@Html.ValidationMessageFor(model => model.User.UserName)
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.User.Name)
+		@Html.EditorFor(model => model.User.Name)
+		@Html.ValidationMessageFor(model => model.User.Name)
+	</div>
+
+	<div>
+		@Html.LabelFor(model => model.User.Surname)
+		@Html.EditorFor(model => model.User.Surname)
+		@Html.ValidationMessageFor(model => model.User.Surname)
+	</div>
+
+	<h2>Add Student Group</h2>
+	<div>
+		@if (User.IsInRole("admin"))
+		{
+			
+			@Html.LabelFor(model => model.Group.Name)
+			@Html.EditorFor(model => model.Group.Name)
+			@Html.ValidationMessageFor(model => model.Group.Name)
+		}
+		@if (User.IsInRole("student"))
+		{
+			@Html.HiddenFor(model => model.Group.Name);
+		}
+
+		@Html.LabelFor(model => model.Group.RegId)
+		@Html.EditorFor(model => model.Group.RegId)
+		@Html.ValidationMessageFor(model => model.Group.RegId)
+		<input type="submit" class="btn btn-primary" name="addGroup" value="Add" />
+
+	</div>
+
+	<h3>Student Groups</h3>
+	<table class="table">
+		<tr>
+			<th>
+				Name
+			</th>
+
+		</tr>
+
+		@foreach (var item in Model.User.StudentGroups)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Name)
+				</td>
+				<td>
+					<button type="button" class="btn btn-danger">
+						@Html.ActionLink("Remove Student Group", "RemoveStudentGroup", new { studgrpId = item.Id, userId = Model.User.Id })
+					</button>
+				</td>
+			</tr>
+		}
+
+	</table>
+
+
+
+	<input type="submit" class="btn btn-primary" name="save" value="Save" />
+	<button type="button" class="btn btn-default">
+		@Html.ActionLink("Back", "Index", "User")
+	</button>
+}

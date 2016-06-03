@@ -17,11 +17,13 @@ namespace DAL.Entities
 		public TimeSpan CompletionTime { get; set; }
 		
 		public List<ThematicArea> ThematicAreas { get; set; }
+		public List<StudentGroup> StudentGroups { get; set; } 
 
 		public TestTemplate()
 		{
 			
 			ThematicAreas= new List<ThematicArea>();
+			StudentGroups= new List<StudentGroup>();
 		}
 
 

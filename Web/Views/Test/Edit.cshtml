@@ -1,5 +1,10 @@
 ﻿@model Web.Models.EditTestModel
+@{
+	ViewBag.Title = "Edit Test";
 
+}
+
+<h2>Edit Test</h2>
 @using (Html.BeginForm())
 {
 	@Html.AntiForgeryToken()
@@ -28,17 +33,33 @@
 	</div>
 
 
-	<h3>Thematic Areas</h3>
-	<p>
-		New Thematic Area Name
+	<h2>Add Thematic Area</h2>
+	<div>
 		
 
-	@Html.LabelFor(model => model.area.Name)
-	@Html.EditorFor(model => model.area.Name)
-	@Html.ValidationMessageFor(model => model.area.Name)
-	<input type="submit" name="add" value="Add"/>
 
-	</p>
+		@Html.LabelFor(model => model.area.Name)
+		@Html.EditorFor(model => model.area.Name)
+		@Html.ValidationMessageFor(model => model.area.Name)
+		<input type="submit" class="btn btn-primary" name="addArea" value="Add"/>
+
+	</div>
+	<h2>Add Student Group</h2>
+	<div>
+	
+		@Html.LabelFor(model => model.group.Name)
+		@Html.EditorFor(model => model.group.Name)
+		@Html.ValidationMessageFor(model => model.group.Name)
+
+
+		@Html.LabelFor(model => model.group.RegId)
+		@Html.EditorFor(model => model.group.RegId)
+		@Html.ValidationMessageFor(model => model.group.RegId)
+		<input type="submit" class="btn btn-primary" name="addGroup" value="Add" />
+
+	</div>
+
+	<h3>Thematic Areas</h3>
 	<table class="table">
 		<tr>
 			<th>
@@ -53,17 +74,45 @@
 				<td>
 					@Html.DisplayFor(modelItem => item.Name)
 				</td>
+				<td>
+					<button type="button" class="btn btn-danger">
+						@Html.ActionLink("Delete", "RemoveTheme", new {themeId = item.Id, testId = Model.test.Id})
+					</button>
+				</td>
 			</tr>
 		}
 
 	</table>
-	<p>
-@*				@Html.ActionLink("Edit Thematic Areas", "EditThematicAreas",id)*@
-	</p>
+
+	<h3>Student Groups</h3>
+	<table class="table">
+		<tr>
+			<th>
+				Name
+			</th>
+
+		</tr>
+
+		@foreach (var item in Model.test.StudentGroups)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Name)
+				</td>
+				<td>
+					<button type="button" class="btn btn-danger" >
+						@Html.ActionLink("Remove Student Group", "RemoveStudentGroup", new { studgrpid = item.Id, testid = Model.test.Id })
+					</button>
+				</td>
+			</tr>
+		}
+
+	</table>
 
 
-	<input type="submit" name="save" value="Save"/>
-	<div>
-		@Html.ActionLink("Back", "Create", "Question")
-	</div>
+
+	<input type="submit" class="btn btn-primary" name="save" value="Save"/>
+	<button type="button" class="btn btn-default">
+		@Html.ActionLink("Back", "Index", "Test")
+	</button>
 }

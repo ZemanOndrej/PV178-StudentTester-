@@ -1,5 +1,10 @@
 ﻿@model BL.DTO.TestTemplateDTO
+@{
+	ViewBag.Title = "Create New Test Template";
 
+}
+
+<h2>Create New TestTemplate</h2>
 @using (Html.BeginForm())
 {
 	@Html.AntiForgeryToken()
@@ -26,6 +31,9 @@
 		@Html.EditorFor(model => model.NumOfQuestions)
 		@Html.ValidationMessageFor(model => model.NumOfQuestions)
 	</div>
-	
-	<input type="submit" value="Add Thematic Areas" />
+
+	<input type="submit" value="Add Thematic Areas"/>
+	<button type="button" class="btn btn-default">
+		@Html.ActionLink("Back", "Index", "Test")
+	</button>
 }

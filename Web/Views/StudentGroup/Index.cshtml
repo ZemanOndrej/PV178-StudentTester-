@@ -1,0 +1,74 @@
+﻿@model IEnumerable<BL.DTO.StudentGroupDTO>
+
+@{
+	ViewBag.Title = "All Student Groups";
+}
+
+<h2>All Student Groups</h2>
+@if (User.IsInRole("admin"))
+{
+	<p>
+		@Html.ActionLink("Create New Student Group", "Create")
+	</p>
+}
+<table class="table">
+	<tr>
+		<th>
+			@Html.DisplayNameFor(model => model.Name)
+		</th>
+		@if (User.IsInRole("admin"))
+		{
+			<th>
+				@Html.DisplayNameFor(model => model.RegId)
+
+			</th>
+		}
+		
+
+		<th>
+			Students Count
+		</th>
+		<th>
+			Tests Count
+		</th>
+		
+
+	</tr>
+
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.Name)
+			</td>
+			@if (User.IsInRole("admin"))
+			{
+				<td>
+					@Html.DisplayFor(modelItem => item.RegId)
+				</td>
+			}
+			
+			<td>
+				@Html.DisplayFor(modelItem => item.Students.Count)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Tests.Count)
+			</td>
+
+			
+				@if (User.IsInRole("admin"))
+				{
+					<td>
+						@Html.ActionLink("Edit", "Edit", new {id = item.Id})
+					</td>
+					<td>
+						@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+					</td>
+					
+				}
+				
+			
+		</tr>
+	}
+
+</table>

@@ -26,9 +26,16 @@
 		<th>
 			@Html.DisplayNameFor(model => model.NumOfQuestions)
 		</th>
-		<th>
-			Thematic Area Count
-		</th>
+		@if (User.IsInRole("admin"))
+		{
+			<th>
+
+				Thematic Area Count
+			</th>
+			<th>
+				Student Group Count
+			</th>
+		}
 		
 	</tr>
 
@@ -47,18 +54,28 @@
 			<td>
 				@Html.DisplayFor(modelItem => item.NumOfQuestions)
 			</td>
+			@if (User.IsInRole("admin"))
+			{
 			<td>
 				@Html.DisplayFor(modelItem => item.ThematicAreas.Count)
 			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.StudentGroups.Count)
+			</td>
 
 			<td>
-				@if (User.IsInRole("admin"))
-				{
-					@Html.ActionLink("Edit", "Edit", new {id = item.Id})
-					@Html.ActionLink("Delete", "Delete", new {id = item.Id})
-				}
+				@Html.ActionLink("Edit", "Edit", new {id = item.Id})
+			</td>
+			<td>
+				@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+			</td>
+
+			}
+			<td>
 				@Html.ActionLink("TakeExam", "TakeTest", new { id = item.Id })
 			</td>
+				
+			
 		</tr>
 	}
 

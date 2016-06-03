@@ -85,16 +85,14 @@ namespace BL.Facades
 		{
 			using (var context = new AppDbContext())
 			{
-				context.Database.Log = Console.WriteLine;
-				var question = context.Questions.Find(id);
+				var quest = context.Questions
+					.Include(t => t.ThematicArea).Include(t => t.Answers)
+					.SingleOrDefault(q => q.Id == id);
+
 				
-
-				context.ThematicAreas.Find(question.ThematicArea).Questions.Remove(question);
-
-				context.Questions.Remove(question);
-
-
-
+				context.Answers.RemoveRange(quest.Answers);
+				
+				context.Questions.Remove(quest);
 				context.SaveChanges();
 			}
 		}
@@ -239,6 +237,29 @@ namespace BL.Facades
 				quest.Answers.Add(option);
 				context.Entry(quest).State = EntityState.Modified;
 				
+
+
+				context.SaveChanges();
+			}
+		}
+
+		public void RemoveAnswer(int ansId, int questId)
+		{
+			
+			using (var context = new AppDbContext())
+			{
+
+				var quest = context.Questions
+					.Include(t => t.ThematicArea).Include(t => t.Answers)
+					.SingleOrDefault(q => q.Id == questId);
+
+
+				quest.Answers.Remove(quest.Answers.SingleOrDefault(t => t.Id == ansId));
+				context.Answers.Remove(context.Answers.SingleOrDefault(s=>s.Id == ansId));
+
+
+				context.Entry(quest).State = EntityState.Modified;
+
 
 
 				context.SaveChanges();

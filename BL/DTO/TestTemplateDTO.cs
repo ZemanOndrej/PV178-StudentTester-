@@ -17,11 +17,13 @@ namespace BL.DTO
 		public TimeSpan CompletionTime { get; set; }
 
 		public List<ThematicAreaDTO> ThematicAreas { get; set; }
+		public List<StudentGroupDTO> StudentGroups { get; set; } 
 
 		public TestTemplateDTO()
 		{
 			CompletionTime=new TimeSpan();
 			ThematicAreas = new List<ThematicAreaDTO>();
+			StudentGroups= new List<StudentGroupDTO>();
 			Date= DateTime.MinValue;
 		}
 	}

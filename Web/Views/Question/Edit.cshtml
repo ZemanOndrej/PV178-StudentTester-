@@ -82,6 +82,12 @@
 				<td>
 					@Html.DisplayFor(modelItem => item.Correct)
 				</td>
+				<td>
+					<button type="button" class="btn btn-danger">
+						@Html.ActionLink("Delete", "DeleteAnswer", new { ansId = item.Id, questId = Model.Question.Id })
+					</button>
+				</td>
+
 			</tr>
 		}
 
@@ -90,5 +96,8 @@
 	</p>
 
 
-	<input type="submit" value="Save" name="save" />
+	<input type="submit" value="Save" name="save"/>
+	<button type="button" class="btn btn-default">
+		@Html.ActionLink("Back", "Index", "Question")
+	</button>
 }

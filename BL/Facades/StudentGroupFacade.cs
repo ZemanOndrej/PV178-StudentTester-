@@ -15,10 +15,11 @@ namespace BL.Facades
 		public void CreateStudentGroup(StudentGroupDTO studentGroup)
 		{
 			var newStudentGroup = Mapping.Mapper.Map<StudentGroup>(studentGroup);
-
+			if (string.IsNullOrEmpty(studentGroup.Name)) return;
 			using (var context = new AppDbContext())
 			{
-				context.Database.Log = Console.WriteLine;
+				if (context.StudentGroups.SingleOrDefault(s => s.Name.Equals(studentGroup.Name)) != null) return;
+				if (context.StudentGroups.SingleOrDefault(s => s.RegId==studentGroup.RegId) != null) return;
 				context.StudentGroups.Add(newStudentGroup);
 				context.SaveChanges();
 			}
@@ -41,7 +42,7 @@ namespace BL.Facades
 
 			using (var context = new AppDbContext())
 			{
-				context.Database.Log = Console.WriteLine;
+				
 				context.Entry(newStudentGroup).State = EntityState.Deleted;
 				context.SaveChanges();
 			};
@@ -51,9 +52,14 @@ namespace BL.Facades
 		{
 			using (var context = new AppDbContext())
 			{
-				context.Database.Log = Console.WriteLine;
+				
+				
 				var studentGroup = context.StudentGroups.Find(id);
-				context.StudentGroups.Remove(studentGroup);
+				context.Entry(studentGroup).Collection(c => c.Students).Load();
+				context.Entry(studentGroup).Collection(c => c.Tests).Load();
+
+
+				context.Entry(studentGroup).State = EntityState.Deleted;
 				context.SaveChanges();
 			};
 		}
@@ -64,7 +70,7 @@ namespace BL.Facades
 		{
 			using (var context = new AppDbContext())
 			{
-				context.Database.Log = Console.WriteLine;
+				
 				var studentGroup = context.StudentGroups.Find(id);
 				context.Entry(studentGroup).Collection(c => c.Students).Load();
 				

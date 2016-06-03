@@ -12,6 +12,11 @@ namespace BL.DTO
 		public string Code { get; set; }
 		public string Name { get; set; }
 		public string Surname { get; set; }
-		public List<StudentGroup> StudentGroups { get; set; }
+		public List<StudentGroupDTO> StudentGroups { get; set; }
+
+		public UserDTO()
+		{
+			StudentGroups = new List<StudentGroupDTO>();
+		}
 	}
 }

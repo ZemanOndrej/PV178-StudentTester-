@@ -1,0 +1,72 @@
+﻿@model IEnumerable<BL.DTO.UserDTO>
+
+@{
+	ViewBag.Title = "All Users";
+	
+}
+
+<h2>All Users</h2>
+<table class="table">
+	<tr>
+		<th>
+			@Html.DisplayNameFor(model => model.UserName)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Name)
+
+		</th>
+
+		<th>
+			@Html.DisplayNameFor(model => model.Surname)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Email)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model=>model.Code)
+		</th>
+		<th>
+			StudentGroups Count 
+		</th>
+
+	</tr>
+
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.UserName)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Name)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Surname)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Email)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Code)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.StudentGroups.Count)
+			</td>
+
+			
+				@if (User.IsInRole("admin"))
+				{
+					<td>
+						@Html.ActionLink("Edit", "Edit", new {id = item.Id})
+					</td>
+					<td>
+						@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+					</td>
+					
+				}
+
+			
+		</tr>
+	}
+
+</table>

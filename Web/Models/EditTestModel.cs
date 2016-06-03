@@ -6,5 +6,6 @@ namespace Web.Models
 	{
 		public TestTemplateDTO test { get; set; }
 		public ThematicAreaDTO area { get; set; }
+		public StudentGroupDTO group { get; set; }
 	}
 }

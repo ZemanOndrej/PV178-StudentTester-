@@ -75,6 +75,18 @@
     <Compile Include="Migrations\201605311607532_themeArea-test.Designer.cs">
       <DependentUpon>201605311607532_themeArea-test.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606021210335_fixTestStudGrp.cs" />
+    <Compile Include="Migrations\201606021210335_fixTestStudGrp.Designer.cs">
+      <DependentUpon>201606021210335_fixTestStudGrp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606022017129_fuckme.cs" />
+    <Compile Include="Migrations\201606022017129_fuckme.Designer.cs">
+      <DependentUpon>201606022017129_fuckme.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606030949556_required-added.cs" />
+    <Compile Include="Migrations\201606030949556_required-added.Designer.cs">
+      <DependentUpon>201606030949556_required-added.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,6 +101,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605311607532_themeArea-test.resx">
       <DependentUpon>201605311607532_themeArea-test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606021210335_fixTestStudGrp.resx">
+      <DependentUpon>201606021210335_fixTestStudGrp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606022017129_fuckme.resx">
+      <DependentUpon>201606022017129_fuckme.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606030949556_required-added.resx">
+      <DependentUpon>201606030949556_required-added.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
