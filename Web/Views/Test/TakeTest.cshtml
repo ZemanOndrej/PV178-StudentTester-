@@ -1,78 +1,108 @@
-﻿@model Web.Models.TestActiveModel
+﻿@using Web.Models
+@model Web.Models.TestActiveModel
 @{
-	ViewBag.Title = Model.Test.Name;
+	ViewBag.Title = Model.Name;
 }
 
 
-	<h1>
-		@Html.ViewData.Model.Test.Name
-	</h1>
-
-<table class="table table-hover table-striped">
-	<tr>
-		
-		<th>
-			@Html.DisplayNameFor(model => model.Test.Date) =
-			@Html.ViewData.Model.Test.Date
-		</th>
-
-		<th>
-			@Html.DisplayNameFor(model => model.Test.CompletionTime) =
-			@Html.ViewData.Model.Test.CompletionTime
-		</th>
-		<th>
-			@Html.DisplayNameFor(model => model.Test.NumOfQuestions) =
-			@Html.ViewData.Model.Test.NumOfQuestions
-		</th>
-
-	</tr>
-</table>
+	
 @using (Html.BeginForm())
 {
+	@Html.AntiForgeryToken()
+	@Html.HiddenFor(model => model.Id)
+	@Html.HiddenFor(model => model.Name)
+	@Html.HiddenFor(model => model.CompletionTime)
+	@Html.HiddenFor(model => model.NumOfQuestions)
+	@Html.HiddenFor(model => model.Date)
 	
+
+	<h1>
+		@Html.DisplayFor(model => model.Name)
+	</h1>
+
+	<table class="table table-hover table-striped">
+		<tr>
+
+			<th>
+				@Html.DisplayNameFor(model => model.Date) = @Html.ViewData.Model.Date
+			</th>
+
+			<th>
+				@Html.DisplayNameFor(model => model.CompletionTime) = @Html.ViewData.Model.CompletionTime
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.NumOfQuestions) = @Html.ViewData.Model.NumOfQuestions
+			</th>
+
+		</tr>
+	</table>
+
+
+	var tmp = 0;
 	
-		var i = 0;
-	
-	foreach(var item in Model.Questions)
+
+	for (var i = 0; i < Model.Questions.Count; i++)
 	{
-		i++;
-		var k = 0;
+		
+		@Html.HiddenFor(model=>model.Questions[i].ThematicArea)
+		@Html.HiddenFor(model => model.Questions[i].Id)
+		@Html.HiddenFor(model => model.Questions[i].OneAnswer)
+		@Html.HiddenFor(model => model.Questions[i].Text)
+		@Html.HiddenFor(model => model.Questions[i].Points)
+		@Html.HiddenFor(model => model.Questions[i].Answers)
 		<table>
 
 			<tr>
 
 				<th>
-					@i .
-					@Html.DisplayFor(modelItem => item.Text)
+					@{
+						var i1 = i + 1;
+					}@i1.
+
+					@Html.DisplayFor(model => model.Questions[i].Text, new { })
 				</th>
 
 			</tr>
 			<tr>
 				<td>
-					@foreach (var ans in item.Answers)
+					@for (var k = 0; k < Model.Questions[i].Answers.Count; k++)
 					{
-						k++;
+
+						@Html.HiddenFor(model => model.Questions[i].Answers[k].Correct)
+						@Html.HiddenFor(model => model.Questions[i].Answers[k].Description)
+						@Html.HiddenFor(model => model.Questions[i].Answers[k].Text)
+						@Html.HiddenFor(model => model.Questions[i].Answers[k].Id)
+						@Html.HiddenFor(model => model.Questions[i].Answers[k].Question)
+
+
 						<div class="mydivIn">
 
-							@k .
+							@{
+								var k1 = k + 1;
+							}@k1.
 
-							@ans.Text
-							<br/>
-							@Html.CheckBoxFor(modelItem => modelItem.Answers[ans.Id])
+
+							@Html.DisplayFor(model => model.Questions[i].Answers[k].Text)
+							<br />
+
+
+							@Html.EditorFor(model => model.Answers[tmp].Selected)
+
+							@Html.HiddenFor(model => model.Answers[tmp].Id)
 
 						</div>
-
-
+						{
+							tmp++;
+						}
 					}
 				</td>
-
 			</tr>
-
-
-
-
-
 		</table>
+		
 	}
-	<input type="submit" class="btn btn-primary" name="submit" value="Submit" />
+
+
+
+
+	<input type="submit" class="btn btn-primary" value="Submit" />
 }

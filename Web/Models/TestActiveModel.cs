@@ -9,9 +9,19 @@ namespace Web.Models
 {
 	public class TestActiveModel
 	{
-		public TestTemplateDTO Test { get; set; }
+		
+		public string Name { get; set; }
+		public int NumOfQuestions { get; set; }
+		public DateTime Date { get; set; }
+		public TimeSpan CompletionTime { get; set; }
+		public int Id { get; set; }
 		public List<QuestionDTO> Questions { get; set; }
-		//		public Dictionary<int,Dictionary<int,bool>> Answers { get; set; }  
-		public Dictionary<int, bool> Answers { get; set; }
+		public CheckboxModel[] Answers { get; set; }
+	}
+
+	public class CheckboxModel
+	{
+		public bool Selected { get; set; }
+		public int Id { get; set; }
 	}
 }

@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{381F99E0-B2B5-42EF-BCBB-F7CE53D4F083}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DAL2try</RootNamespace>
     <AssemblyName>DAL2try</AssemblyName>
@@ -31,6 +31,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -63,32 +66,16 @@
     <Compile Include="AppDbContext.cs" />
     <Compile Include="Entities\Answer.cs" />
     <Compile Include="Entities\Question.cs" />
+    <Compile Include="Entities\Result.cs" />
     <Compile Include="Entities\StudentGroup.cs" />
     <Compile Include="Entities\TestTemplate.cs" />
     <Compile Include="Entities\ThematicArea.cs" />
     <Compile Include="IdentityEntities\AppUser.cs" />
-    <Compile Include="Migrations\201605311213461_init.cs" />
-    <Compile Include="Migrations\201605311213461_init.Designer.cs">
-      <DependentUpon>201605311213461_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201605311607532_themeArea-test.cs" />
-    <Compile Include="Migrations\201605311607532_themeArea-test.Designer.cs">
-      <DependentUpon>201605311607532_themeArea-test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606021210335_fixTestStudGrp.cs" />
-    <Compile Include="Migrations\201606021210335_fixTestStudGrp.Designer.cs">
-      <DependentUpon>201606021210335_fixTestStudGrp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606022017129_fuckme.cs" />
-    <Compile Include="Migrations\201606022017129_fuckme.Designer.cs">
-      <DependentUpon>201606022017129_fuckme.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201606030949556_required-added.cs" />
-    <Compile Include="Migrations\201606030949556_required-added.Designer.cs">
-      <DependentUpon>201606030949556_required-added.cs</DependentUpon>
+    <Compile Include="Migrations\201607301820339_init.cs" />
+    <Compile Include="Migrations\201607301820339_init.Designer.cs">
+      <DependentUpon>201607301820339_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -96,20 +83,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201605311213461_init.resx">
-      <DependentUpon>201605311213461_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201605311607532_themeArea-test.resx">
-      <DependentUpon>201605311607532_themeArea-test.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606021210335_fixTestStudGrp.resx">
-      <DependentUpon>201606021210335_fixTestStudGrp.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606022017129_fuckme.resx">
-      <DependentUpon>201606022017129_fuckme.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201606030949556_required-added.resx">
-      <DependentUpon>201606030949556_required-added.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201607301820339_init.resx">
+      <DependentUpon>201607301820339_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

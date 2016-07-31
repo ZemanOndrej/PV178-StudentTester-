@@ -16,6 +16,7 @@ namespace DAL
 		public DbSet<Answer> Answers { get; set; }
 		public DbSet<StudentGroup> StudentGroups { get; set; }
 		public DbSet<TestTemplate> TestTemplates { get; set; }
+		public DbSet<Result> Results { get; set; }
 
 		public AppDbContext() : base("AppDB2")
 		{

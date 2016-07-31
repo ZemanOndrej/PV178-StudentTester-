@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using BL.DTO;
 using BL.Facades;
 using Microsoft.AspNet.Identity;
+
 using Web.Models;
 
 namespace Web.Controllers
@@ -14,6 +16,7 @@ namespace Web.Controllers
 	public class TestController : Controller
 	{
 		TestTemplateFacade testFacade = new TestTemplateFacade();
+		ResultFacade resultFacade = new ResultFacade();
 
 		#region TestEdit
 
@@ -142,13 +145,19 @@ namespace Web.Controllers
 			var testTmp = testFacade.GetTestTemplateById(id);
 			var que = new QuestionFacade().GetNumOfRandQuestionsFromThematicAreas(testTmp.NumOfQuestions, testTmp.ThematicAreas);
 
-			var answs= que.SelectMany(s => s.Answers)
-				.ToDictionary(ans => ans.Id, ans => false);
+			var answs = que.SelectMany(s => s.Answers)
+				.Select(tmp => new CheckboxModel {Id = tmp.Id, Selected = false})
+				.ToArray();
+
 
 			var model = new TestActiveModel
 			{
-				Questions = que
-				,Test = testTmp,
+				Id = testTmp.Id,
+				Name = testTmp.Name,
+				CompletionTime = testTmp.CompletionTime,
+				Date = testTmp.Date,
+				NumOfQuestions = testTmp.NumOfQuestions,
+				Questions = que,
 				Answers = answs
 			};
 
@@ -158,10 +167,34 @@ namespace Web.Controllers
 		[HttpPost]
 		public ActionResult TakeTest(int id ,TestActiveModel testActive)
 		{
-			Console.WriteLine(testActive.Test.Name);
+
+			Console.WriteLine(testActive.Answers[0]);
+
+			var tmp = testActive.Answers
+				.ToDictionary(checkboxModel => checkboxModel.Id, checkboxModel => checkboxModel.Selected);
+			var str = new StringBuilder();
+			foreach (var b in tmp)
+			{
+				str.Append(b.Key + "," + b.Value + ";");
+			}
+			
+			resultFacade.CreateResult(new ResultDTO {
+				TestTemplateDTOId = id,
+				UserDTOId = Convert.ToInt32(User.Identity.GetUserId()),
+				ResultString = str.ToString()
+			});
+
+
+
 			return RedirectToAction("Index");
 		}
 
-		
+
+		public ActionResult CompletedTestsIndex()
+		{
+
+
+			return View(new CompletedTestsModel());
+		}
 	}
 }

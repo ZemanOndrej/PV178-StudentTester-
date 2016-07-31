@@ -34,6 +34,7 @@
 				<ul class="nav navbar-nav">
 					<li>@Html.ActionLink("Home", "Index", "Home")</li>
 					<li>@Html.ActionLink("Available Tests", "Index", "Test")</li>
+					<li>@Html.ActionLink("Completed Tests", "CompletedTestsIndex", "Test")</li>
 					<li>@Html.ActionLink("Student Groups", "Index", "StudentGroup")</li>
 					@if (User.IsInRole("admin"))
 					{

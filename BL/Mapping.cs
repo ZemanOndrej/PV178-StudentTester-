@@ -36,6 +36,7 @@ namespace BL
 				c.CreateMap<TestTemplate, TestTemplateDTO>().ReverseMap();
 				c.CreateMap<Answer, AnswerDTO>().ReverseMap();
 				c.CreateMap<UserDTO, AppUser>().ReverseMap();
+				c.CreateMap<ResultDTO, Result>().ReverseMap();
 			});
 			Mapper = config.CreateMapper();
 		}

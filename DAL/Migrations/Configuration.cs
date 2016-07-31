@@ -1,21 +1,18 @@
-using DAL;
-
-namespace DAL.Migrations
+namespace DAL2try.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<AppDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<DAL.AppDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            ContextKey = "DAL2try.AppDbContext";
         }
 
-        protected override void Seed(AppDbContext context)
+        protected override void Seed(DAL.AppDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

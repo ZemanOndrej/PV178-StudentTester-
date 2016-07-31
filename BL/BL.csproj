@@ -63,12 +63,14 @@
   <ItemGroup>
     <Compile Include="DTO\AnswerDTO.cs" />
     <Compile Include="DTO\QuestionDTO.cs" />
+    <Compile Include="DTO\ResultDTO.cs" />
     <Compile Include="DTO\StudentGroupDTO.cs" />
     <Compile Include="DTO\TestTemplateDTO.cs" />
     <Compile Include="DTO\ThematicAreaDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Facades\AnswerFacade.cs" />
     <Compile Include="Facades\QuestionFacade.cs" />
+    <Compile Include="Facades\ResultFacade.cs" />
     <Compile Include="Facades\StudentGroupFacade.cs" />
     <Compile Include="Facades\TestTemplateFacade.cs" />
     <Compile Include="Facades\ThematicAreaFacade.cs" />

@@ -58,12 +58,12 @@ namespace ConsoleApplication1
 			};
 		
 			
-
-			var kappa = new StudentGroupDTO { Name = "StudGroup101" };
-			kappa.Students.Add(stud);
-			
-			kappa.Tests.Add(new TestTemplateDTO {Name = "gachiGASM" , Date = DateTime.Now});
-			var test = new TestTemplateDTO {Name = "dasdaaaaaaaaa",Date = DateTime.Now };
+//
+//			var kappa = new StudentGroupDTO { Name = "StudGroup101" };
+//			kappa.Students.Add(stud);
+//			
+//			kappa.Tests.Add(new TestTemplateDTO {Name = "gachiGASM" , Date = DateTime.Now});
+//			var test = new TestTemplateDTO {Name = "dasdaaaaaaaaa",Date = DateTime.Now };
 
 			
 
@@ -71,10 +71,13 @@ namespace ConsoleApplication1
 
 			if (!roleManager.RoleExists("admin"))
 			{
+				Console.WriteLine("admin role added");
 				roleManager.Create(new AppRole { Name = "admin" });
 			}
 			if (!roleManager.RoleExists("student"))
 			{
+				Console.WriteLine("student role added");
+
 				roleManager.Create(new AppRole { Name = "student" });
 			}
 
@@ -134,43 +137,43 @@ namespace ConsoleApplication1
 
 
 
-			for (int i = 0; i < 10; i++)
-			{
-				var quest = new QuestionDTO
-				{
-					Answers = new List<AnswerDTO>
-				{
-					new AnswerDTO
-					{
-
-						Text = "C2 "+i,
-						Correct = true
-					},
-					new AnswerDTO
-					{
-						Text = "CC2"+i,
-						Correct = false
-					},
-					new AnswerDTO
-					{
-						Text = "CC3"+i,
-						Correct = false
-					}
-					,
-					new AnswerDTO
-					{
-						Text = "CC4 "+i,
-						Correct = false
-					}
-				}
-				,
-					Text = "C#2  Qnum =>"+i,
-					OneAnswer = true,
-					Points = 5
-				};
-
-				questionFac.CreateQuestion(quest, "C#2");
-			}
+//			for (int i = 0; i < 10; i++)
+//			{
+//				var quest = new QuestionDTO
+//				{
+//					Answers = new List<AnswerDTO>
+//				{
+//					new AnswerDTO
+//					{
+//
+//						Text = "C2 "+i,
+//						Correct = true
+//					},
+//					new AnswerDTO
+//					{
+//						Text = "CC2"+i,
+//						Correct = false
+//					},
+//					new AnswerDTO
+//					{
+//						Text = "CC3"+i,
+//						Correct = false
+//					}
+//					,
+//					new AnswerDTO
+//					{
+//						Text = "CC4 "+i,
+//						Correct = false
+//					}
+//				}
+//				,
+//					Text = "C#2  Qnum =>"+i,
+//					OneAnswer = true,
+//					Points = 5
+//				};
+//
+//				questionFac.CreateQuestion(quest, "C#2");
+//			}
 
 //			Console.WriteLine(testTempFac.CreateTestTemplate(new TestTemplateDTO
 //			{
