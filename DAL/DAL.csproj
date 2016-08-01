@@ -75,6 +75,22 @@
     <Compile Include="Migrations\201607301820339_init.Designer.cs">
       <DependentUpon>201607301820339_init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607311913543_resultpts.cs" />
+    <Compile Include="Migrations\201607311913543_resultpts.Designer.cs">
+      <DependentUpon>201607311913543_resultpts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608012133477_testName.cs" />
+    <Compile Include="Migrations\201608012133477_testName.Designer.cs">
+      <DependentUpon>201608012133477_testName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608012143253_namechange.cs" />
+    <Compile Include="Migrations\201608012143253_namechange.Designer.cs">
+      <DependentUpon>201608012143253_namechange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608012150050_time.cs" />
+    <Compile Include="Migrations\201608012150050_time.Designer.cs">
+      <DependentUpon>201608012150050_time.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -85,6 +101,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201607301820339_init.resx">
       <DependentUpon>201607301820339_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607311913543_resultpts.resx">
+      <DependentUpon>201607311913543_resultpts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608012133477_testName.resx">
+      <DependentUpon>201608012133477_testName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608012143253_namechange.resx">
+      <DependentUpon>201608012143253_namechange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608012150050_time.resx">
+      <DependentUpon>201608012150050_time.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -17,6 +17,7 @@ namespace Web.Controllers
 	{
 		TestTemplateFacade testFacade = new TestTemplateFacade();
 		ResultFacade resultFacade = new ResultFacade();
+		QuestionFacade questionFacade = new QuestionFacade();
 
 		#region TestEdit
 
@@ -167,21 +168,64 @@ namespace Web.Controllers
 		[HttpPost]
 		public ActionResult TakeTest(int id ,TestActiveModel testActive)
 		{
-
-			Console.WriteLine(testActive.Answers[0]);
-
+			
 			var tmp = testActive.Answers
 				.ToDictionary(checkboxModel => checkboxModel.Id, checkboxModel => checkboxModel.Selected);
 			var str = new StringBuilder();
-			foreach (var b in tmp)
+			
+			double respts = 0;
+			
+			foreach (var questionDto in testActive.Questions)
 			{
-				str.Append(b.Key + "," + b.Value + ";");
+				var correctResult = 0;
+				var correct = 0;
+				var wrong = 0;
+				var question = questionFacade.GetQuestionById(questionDto.Id);
+
+				foreach (var answerDto in question.Answers)
+				{
+					
+					if (answerDto.Correct && tmp.FirstOrDefault(s => s.Key == answerDto.Id ).Value == answerDto.Correct)
+					{
+						correctResult++;
+					}
+					else if(!answerDto.Correct && tmp.FirstOrDefault(s => s.Key == answerDto.Id).Value )
+					{
+						wrong++;
+					}
+					if (answerDto.Correct)
+					{
+						correct++;
+					}
+				}
+				if (correct == 0)
+				{
+					continue;
+				}
+				var count =  (double)(correctResult - wrong) / correct ;
+				if (count < 0) count = 0;
+				count *= question.Points;
+
+
+				respts += (Math.Round((double)(count * 4), MidpointRounding.ToEven) / 4);
+
 			}
 			
+			foreach (var b in tmp)
+			{
+				
+				str.Append(b.Key + "," + b.Value + ";");
+			}
+
 			resultFacade.CreateResult(new ResultDTO {
-				TestTemplateDTOId = id,
-				UserDTOId = Convert.ToInt32(User.Identity.GetUserId()),
-				ResultString = str.ToString()
+				TestTemplateId = id,
+				UserId = Convert.ToInt32(User.Identity.GetUserId()),
+				ResultString = str.ToString(),
+				ResultPoints = respts,
+				TestTemplateName = testActive.Name,
+				Time = DateTime.Now
+
+
 			});
 
 
@@ -194,7 +238,26 @@ namespace Web.Controllers
 		{
 
 
-			return View(new CompletedTestsModel());
+			if (User.IsInRole("admin"))
+			{
+				return View(resultFacade.GetAllResults());
+			}
+			if (User.IsInRole("student"))
+			{
+				return View(resultFacade.GetAllResultsFromUser(Convert.ToInt32(User.Identity.GetUserId())));
+			}
+			return RedirectToAction("Index", "Home");
+		}
+
+		public ActionResult OpenResult(int id)
+		{
+			throw new NotImplementedException();
+		}
+
+		public ActionResult DeleteResult(int id)
+		{
+			resultFacade.RemoveResult(resultFacade.GetResultWithId(id));
+			return RedirectToAction("CompletedTestsIndex");
 		}
 	}
 }

@@ -1,8 +1,69 @@
-﻿@using Web.Models
-@model Web.Models.CompletedTestsModel
+﻿@using BL.DTO
+@model IEnumerable<ResultDTO>
 
 @{
 	ViewBag.Title = "Completed Tests";
 }
 
 <h2>Completed Tests</h2>
+<table class="table">
+	<tr>
+		<th>
+			@Html.DisplayNameFor(model => model.TestTemplateName)
+		</th>
+		<th>
+			@Html.DisplayNameFor(model => model.Time)
+		</th>
+		@if (User.IsInRole("admin"))
+		{
+			<th>
+				@Html.DisplayNameFor(model => model.UserId)
+
+			</th>
+		}
+		<th>
+			@Html.DisplayNameFor(model => model.ResultPoints)
+		</th>
+
+
+
+
+	</tr>
+
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td>
+				@Html.DisplayFor(model => item.TestTemplateName)
+			</td>
+			<td>
+				@Html.DisplayFor(model => item.Time)
+			</td>
+			@if (User.IsInRole("admin"))
+			{
+				<td>
+
+					@Html.DisplayFor(modelItem => item.UserId)
+				</td>
+			}
+			<td>
+				@Html.DisplayFor(modelItem => item.ResultPoints)
+			</td>
+			<td>
+				@Html.ActionLink("Open Result", "OpenResult", new { id = item.Id })
+			</td>
+			@if (User.IsInRole("admin"))
+			{
+				
+
+				<td>
+					@Html.ActionLink("Delete Result", "DeleteResult", new { id = item.Id })
+				</td>
+
+			}
+
+
+		</tr>
+	}
+
+</table>
