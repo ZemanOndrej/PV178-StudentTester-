@@ -1,0 +1,98 @@
+﻿@using Web.Models
+@model Web.Models.ResultModel
+@{
+	ViewBag.Title = "Result of Test : "+Model.Name+" completed at "+Model.Date;
+}
+
+@{
+	<h2>
+		 Result of Test :  @Model.Name <br> Completed at @Model.Date <br> Score : @Model.Score Points
+	</h2>
+
+	<table class="table table-hover table-striped">
+		<tr>
+
+			<th>
+				@Html.DisplayNameFor(model => model.Date) = @Html.ViewData.Model.Date
+			</th>
+
+			<th>
+				@Html.DisplayNameFor(model => model.CompletionTime) = @Html.ViewData.Model.CompletionTime
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.NumOfQuestions) = @Html.ViewData.Model.NumOfQuestions
+			</th>
+
+		</tr>
+	</table>
+
+
+	var tmp = 0;
+
+
+	for (var i = 0; i < Model.Questions.Count; i++)
+	{
+
+		@Html.HiddenFor(model => model.Questions[i].ThematicArea)
+		@Html.HiddenFor(model => model.Questions[i].Id)
+		@Html.HiddenFor(model => model.Questions[i].OneAnswer)
+		@Html.HiddenFor(model => model.Questions[i].Text)
+		@Html.HiddenFor(model => model.Questions[i].Points)
+		@Html.HiddenFor(model => model.Questions[i].Answers)
+		<table>
+
+			<tr>
+
+				<th >
+					@{
+						var i1 = i + 1;
+					}@i1.
+
+					@Html.DisplayFor(model => model.Questions[i].Text, new {})
+				</th>
+
+			</tr>
+			<tr>
+				<td>
+					@for (var k = 0; k < Model.Questions[i].Answers.Count; k++)
+					{
+
+						@Html.HiddenFor(model => model.Questions[i].Answers[k].Correct)
+						@Html.HiddenFor(model => model.Questions[i].Answers[k].Description)
+						@Html.HiddenFor(model => model.Questions[i].Answers[k].Text)
+						@Html.HiddenFor(model => model.Questions[i].Answers[k].Id)
+						@Html.HiddenFor(model => model.Questions[i].Answers[k].Question)
+
+						var divClass = !Model.ResultBools[tmp] ? "danger" : "success";
+
+
+						<div class="mydivIn alert alert-@divClass">
+
+							@{
+								var k1 = k + 1;
+							}@k1.
+
+
+							@Html.DisplayFor(model => model.Questions[i].Answers[k].Text)
+							<br/>
+
+
+							@Html.EditorFor(model => model.Answers[tmp].Selected)
+
+							@Html.HiddenFor(model => model.Answers[tmp].Id)
+
+						</div>
+						{
+							tmp++;
+						}
+					}
+				</td>
+			</tr>
+		</table>
+
+	}
+	@Html.ActionLink("Back", "CompletedTestsIndex", null, new { @class="btn btn-primary" }) 
+
+
+}
+

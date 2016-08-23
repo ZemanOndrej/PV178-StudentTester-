@@ -116,8 +116,6 @@ namespace BL.Facades
 
 		#region get
 
-
-
 		public List<QuestionDTO> GetNumOfRandQuestionsFromThematicAreas(int num, List<ThematicAreaDTO> areasDto)
 		{
 			using (var context = new AppDbContext())
@@ -148,12 +146,23 @@ namespace BL.Facades
 					questions[n] = value;
 				}
 
-
-
-
 				return questions.Select(q=> Mapping.Mapper.Map<QuestionDTO>(q)).Take(num).ToList();
 			}
 		}
+
+		public List<QuestionDTO> GetListOfQuestionsByTheirAnswers(List<int> ids )
+		{
+			var listQ=new List<QuestionDTO>();
+			var ansFac = new AnswerFacade();
+
+			foreach (var quesDto in ids.Select(id => GetQuestionById(ansFac.GetAnswerById(id).Question.Id)))
+			{
+				if(!listQ.Select(s=>s.Id).Contains(quesDto.Id))
+					listQ.Add(quesDto);
+			}
+
+			return listQ;
+		} 
 
 
 

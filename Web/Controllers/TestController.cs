@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -251,8 +252,48 @@ namespace Web.Controllers
 
 		public ActionResult OpenResult(int id)
 		{
-			throw new NotImplementedException();
+
+			var testResult = resultFacade.GetResultWithId(id);
+			var resList = testResult.ResultString.Split(';');
+			resList = resList.Take(resList.Length - 1).ToArray();
+			var arrRes = resList.Select(s => s.Split(','))
+				.Select(strings =>new CheckboxModel { Id = int.Parse(strings[0]), Selected = Convert.ToBoolean(strings[1]) })
+				.ToArray();
+			
+
+
+
+
+			var testTmp = testFacade.GetTestTemplateById(testResult.TestTemplateId);
+			var que = new QuestionFacade().GetListOfQuestionsByTheirAnswers(arrRes.Select(s => s.Id).ToList());
+			var blres = new List<bool>();
+			var answers = que.SelectMany(s => s.Answers).ToList();
+			for (int i = 0; i < answers.Count(); i++)
+			{
+				blres.Add(answers[i].Correct == arrRes[i].Selected);
+			}
+
+
+
+
+			var model = new ResultModel
+			{
+				Id = testTmp.Id,
+				Name = testTmp.Name,
+				CompletionTime = testTmp.CompletionTime,
+				Date = testTmp.Date,
+				NumOfQuestions = testTmp.NumOfQuestions,
+				Questions = que,
+				Answers = arrRes,
+				ResultBools = blres,
+				Score = testResult.ResultPoints
+				
+			};
+
+			return View(model);
+
 		}
+
 
 		public ActionResult DeleteResult(int id)
 		{
