@@ -22,8 +22,7 @@
 		@Html.ValidationMessageFor(model => model.RegId)
 	</div>
 
-	<input type="submit" value="Save" />
-	<button type="button" class="btn btn-default">
-		@Html.ActionLink("Back", "Index", "Test")
-	</button>
+	<input type="submit" value="Save" class="btn btn-default"/>
+	@Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
+
 }

@@ -50,14 +50,14 @@
 				@Html.DisplayFor(modelItem => item.ResultPoints)
 			</td>
 			<td>
-				@Html.ActionLink("Open Result", "OpenResult", new { id = item.Id })
+				@Html.ActionLink("Open", "OpenResult", new { id = item.Id }, new { @class = "btn btn-primary" })
 			</td>
 			@if (User.IsInRole("admin"))
 			{
 				
 
 				<td>
-					@Html.ActionLink("Delete Result", "DeleteResult", new { id = item.Id })
+					@Html.ActionLink("Delete", "DeleteResult", new { id = item.Id }, new { @class = "btn btn-danger" })
 				</td>
 
 			}

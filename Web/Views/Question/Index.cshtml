@@ -8,7 +8,7 @@
 @if (User.IsInRole("admin"))
 {
 	<p>
-		@Html.ActionLink("Create New", "Create")
+		@Html.ActionLink("Create New", "Create" ,null, new { @class = "btn btn-success" })
 	</p>
 }
 <table class="table">
@@ -52,10 +52,10 @@
 				@Html.DisplayFor(modelItem => item.Answers.Count)
 			</td>
 			<td>
-				@Html.ActionLink("Edit", "Edit", new {id = item.Id})
+				@Html.ActionLink("Edit", "Edit", new {id = item.Id}, new { @class = "btn btn-primary" })
 			</td>
 			<td>
-				@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+				@Html.ActionLink("Delete", "Delete", new { id = item.Id },new { @class = "btn btn-danger" })
 			</td>
 		</tr>
 	}

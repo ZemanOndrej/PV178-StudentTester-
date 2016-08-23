@@ -75,9 +75,9 @@
 					@Html.DisplayFor(modelItem => item.Name)
 				</td>
 				<td>
-					<button type="button" class="btn btn-danger">
-						@Html.ActionLink("Delete", "RemoveTheme", new {themeId = item.Id, testId = Model.test.Id})
-					</button>
+					
+					@Html.ActionLink("Delete", "RemoveTheme", new {themeId = item.Id, testId = Model.test.Id},new {@class="btn btn-danger"})
+					
 				</td>
 			</tr>
 		}
@@ -100,9 +100,10 @@
 					@Html.DisplayFor(modelItem => item.Name)
 				</td>
 				<td>
-					<button type="button" class="btn btn-danger" >
-						@Html.ActionLink("Remove Student Group", "RemoveStudentGroup", new { studgrpid = item.Id, testid = Model.test.Id })
-					</button>
+
+					@Html.ActionLink("Remove Student Group", "RemoveStudentGroup", new { studgrpid = item.Id, testid = Model.test.Id },
+					   new { @class = "btn btn-danger" })
+
 				</td>
 			</tr>
 		}
@@ -112,7 +113,5 @@
 
 
 	<input type="submit" class="btn btn-primary" name="save" value="Save"/>
-	<button type="button" class="btn btn-default">
-		@Html.ActionLink("Back", "Index", "Test")
-	</button>
+	@Html.ActionLink("Back", "Index", null, new { @class = "btn btn-primary" })
 }

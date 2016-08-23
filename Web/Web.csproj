@@ -294,7 +294,6 @@
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Question\Index.cshtml" />
     <Content Include="Views\Question\Create.cshtml" />
-    <Content Include="Views\Question\AddAnswer.cshtml" />
     <Content Include="Views\Question\Edit.cshtml" />
     <Content Include="Views\StudentGroup\Index.cshtml" />
     <Content Include="Views\StudentGroup\Create.cshtml" />

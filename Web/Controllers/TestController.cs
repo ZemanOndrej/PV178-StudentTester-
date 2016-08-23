@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using BL.DTO;
 using BL.Facades;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 
 using Web.Models;
@@ -125,8 +126,14 @@ namespace Web.Controllers
 
 		#endregion
 
+
 		public ActionResult Index()
 		{
+
+			ViewBag.error = TempData["error"];
+
+
+
 			if (User.IsInRole("admin"))
 			{
 				return View(testFacade.GetAllTestTemplates());
@@ -145,6 +152,18 @@ namespace Web.Controllers
 		{
 
 			var testTmp = testFacade.GetTestTemplateById(id);
+
+			var time2 = testTmp.Date + testTmp.CompletionTime;
+
+
+			if (DateTime.Now > time2 || DateTime.Now < testTmp.Date)
+			{
+				TempData["error"] = "Cannot start the test!";
+				return RedirectToAction("Index");
+			}
+			
+
+
 			var que = new QuestionFacade().GetNumOfRandQuestionsFromThematicAreas(testTmp.NumOfQuestions, testTmp.ThematicAreas);
 
 			var answs = que.SelectMany(s => s.Answers)

@@ -32,8 +32,8 @@
 		@Html.ValidationMessageFor(model => model.NumOfQuestions)
 	</div>
 
-	<input type="submit" value="Add Thematic Areas"/>
-	<button type="button" class="btn btn-default">
-		@Html.ActionLink("Back", "Index", "Test")
-	</button>
+	<input type="submit" value="Add Thematic Areas" class="btn btn-default"/>
+	@Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
+
+
 }

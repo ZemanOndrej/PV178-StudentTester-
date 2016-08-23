@@ -4,10 +4,17 @@
 	ViewBag.Title = "All Available Tests";
 }
 <h2>All Available Tests</h2>
+@if (ViewBag.error!=null)
+{
+	<div class= "alert alert-danger">@ViewBag.error</div>
+}
+
+
+
 @if (User.IsInRole("admin"))
 {
 	<p>
-		@Html.ActionLink("Create New", "Create")
+		@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-success" })
 	</p>
 }
 <table class="table">
@@ -64,15 +71,15 @@
 			</td>
 
 			<td>
-				@Html.ActionLink("Edit", "Edit", new {id = item.Id})
+				@Html.ActionLink("Edit", "Edit", new {id = item.Id}, new { @class = "btn btn-primary" })
 			</td>
 			<td>
-				@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+				@Html.ActionLink("Delete", "Delete", new { id = item.Id } , new {@class="btn btn-danger"})
 			</td>
 
 			}
 			<td>
-				@Html.ActionLink("TakeExam", "TakeTest", new { id = item.Id })
+				@Html.ActionLink("TakeExam", "TakeTest", new { id = item.Id }, new { @class = "btn btn-warning" })
 			</td>
 				
 			

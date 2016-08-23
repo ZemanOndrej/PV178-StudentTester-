@@ -8,7 +8,7 @@
 @if (User.IsInRole("admin"))
 {
 	<p>
-		@Html.ActionLink("Create New Student Group", "Create")
+		@Html.ActionLink("Create New Student Group", "Create", null, new { @class = "btn btn-success" })
 	</p>
 }
 <table class="table">
@@ -62,7 +62,7 @@
 @*						@Html.ActionLink("Edit", "Edit", new {id = item.Id})*@
 @*					</td>*@
 					<td>
-						@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+						@Html.ActionLink("Delete", "Delete", new { id = item.Id }, new {@class="btn btn-danger"})
 					</td>
 					
 				}

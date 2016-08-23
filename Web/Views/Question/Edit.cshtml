@@ -52,7 +52,7 @@
 			@Html.EditorFor(model => model.Answer.Description)
 			@Html.ValidationMessageFor(model => model.Answer.Description)
 		</div>
-		<input type="submit" name="add" value="Add" />
+		<input type="submit" name="add" value="Add" class="btn btn-primary"/>
 	</div>
 
 	<h3>Answers</h3>
@@ -83,9 +83,12 @@
 					@Html.DisplayFor(modelItem => item.Correct)
 				</td>
 				<td>
-					<button type="button" class="btn btn-danger">
-						@Html.ActionLink("Delete", "DeleteAnswer", new { ansId = item.Id, questId = Model.Question.Id })
-					</button>
+
+
+
+					@Html.ActionLink("Delete", "DeleteAnswer", new { ansId = item.Id, questId = Model.Question.Id }
+						, new { @class = "btn btn-danger" })
+
 				</td>
 
 			</tr>
@@ -96,8 +99,7 @@
 	</p>
 
 
-	<input type="submit" value="Save" name="save"/>
-	<button type="button" class="btn btn-default">
-		@Html.ActionLink("Back", "Index", "Question")
-	</button>
+	<input type="submit" value="Save" name="save" class="btn btn-default"/>
+	@Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
+
 }

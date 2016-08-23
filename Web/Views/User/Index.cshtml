@@ -57,10 +57,10 @@
 				@if (User.IsInRole("admin"))
 				{
 					<td>
-						@Html.ActionLink("Edit", "Edit", new {id = item.Id})
+						@Html.ActionLink("Edit", "Edit", new {id = item.Id}, new { @class = "btn btn-primary" })
 					</td>
 					<td>
-						@Html.ActionLink("Delete", "Delete", new { id = item.Id })
+						@Html.ActionLink("Delete", "Delete", new { id = item.Id } , new {@class="btn btn-danger"})
 					</td>
 					
 				}

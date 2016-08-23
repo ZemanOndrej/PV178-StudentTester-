@@ -38,8 +38,7 @@
 	<h3>Answers</h3>
 
 
-	<input type="submit" value="Add Answers"/>
-	<button type="button" class="btn btn-default">
-		@Html.ActionLink("Back", "Index", "Question")
-	</button>
+	<input type="submit" value="Add Answers" class = "btn btn-default" />
+	@Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
+
 }
