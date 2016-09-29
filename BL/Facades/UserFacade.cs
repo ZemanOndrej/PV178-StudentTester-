@@ -33,9 +33,22 @@ namespace BL.Facades
 				context.SaveChanges();
 
 			}
+			var roleManager = new AppRoleManager(new AppRoleStore(new AppDbContext()));
+
+			if (!roleManager.RoleExists("admin"))
+			{
+				Console.WriteLine("admin role added");
+				roleManager.Create(new AppRole { Name = "admin" });
+			}
+			if (!roleManager.RoleExists("student"))
+			{
+				Console.WriteLine("student role added");
+
+				roleManager.Create(new AppRole { Name = "student" });
+			}
 
 
-			
+
 			if (user.Code == null)
 			{
 				userManager.AddToRole(ourUser.Id, "student");
